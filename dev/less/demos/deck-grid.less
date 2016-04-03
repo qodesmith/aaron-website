@@ -1,0 +1,39 @@
+#deck-grid {
+  z-index: 9001;
+  position: absolute;
+  top: 0;
+  background: white;
+  opacity: 0;
+  transition: opacity 1s;
+  color: black;
+  overflow: hidden;
+
+  &.show {
+    opacity: 1;
+  }
+
+  .close {
+    right: unset;
+    left: 0;
+    color: red;
+    border-color: red;
+  }
+
+  // Overwriting some styles for deck grid.
+  .container {
+    height: 100vh;
+    overflow-y: scroll;
+  }
+
+  .grid {
+    border: none;
+  }
+
+  .load-layout-modal {
+    height: 335px;
+  }
+
+  .legend-item {
+    user-select: none;
+  }
+}

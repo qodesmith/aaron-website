@@ -1,0 +1,243 @@
+///////////////
+// VARIABLES //
+///////////////
+
+// Breakpoints.
+@mobile: 767px;
+@tablet-min: 768px;
+@tablet-max: 1023px;
+@desktop: 1024px;
+@desktop-large: 1280px;
+
+// Text.
+@light-txt: #ecf0f1;
+@dark-txt: #2c3e50;
+
+// Backgrounds.
+@light-bg: @light-txt;
+@dark-bg: @dark-txt;
+@code-gray: #272822;
+
+// Other colors.
+@link: #1abc9c;
+@link-hover: #2ecc71;
+
+
+//////////////
+// TYPEFACE //
+//////////////
+
+// Monospace.
+@font-face {
+  font-family: 'Anonymous Pro';
+  src: url(fonts/Anonymous_Pro/AnonymousPro-Regular.ttf) format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Anonymous Pro';
+  src: url(fonts/Anonymous_Pro/AnonymousPro-Bold.ttf) format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+// Sans-serif.
+@font-face {
+  font-family: 'Open Sans';
+  src: url(fonts/Open_Sans/OpenSans-Light.ttf) format('truetype');
+  font-weight: 300;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Open Sans';
+  src: url(fonts/Open_Sans/OpenSans-SemiBold.ttf) format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Open Sans';
+  src: url(fonts/Open_Sans/OpenSans-ExtraBold.ttf) format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
+
+// Headings / bold-caps.
+@font-face {
+  font-family: 'Bebas';
+  src: url(fonts/bebas_neue/BebasNeue.otf) format('opentype');
+  font-style: normal;
+}
+
+
+////////////////////
+//   UNIVERSAL    //
+// ELEMENT STYLES //
+////////////////////
+
+* {
+  box-sizing: border-box;
+  outline: none;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background: @code-gray url(images/silly-code.png);
+  background-size: cover;
+  font-size: 1.2em;
+  color: @light-txt;
+
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: -1;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,.9);
+  }
+}
+
+// Menu pages.
+.page {
+  transition: left .6s, right .6s, top .6s;
+  position: absolute;
+  top: 0;
+  font-weight: 100;
+  overflow-y: hidden;
+
+  &.show {
+    overflow-y: scroll;
+  }
+
+  &.left {
+    left: 100vw;
+
+    &.show {
+      left: 0;
+    }
+  }
+
+  &.right {
+    right: 100vw;
+
+    &.show {
+      right: 0;
+    }
+  }
+
+  &.top {
+    top: 100vh;
+
+    &.show {
+      top: 0;
+    }
+  }
+
+  &.bottom {
+    top: -100vh;
+
+    &.show {
+      top: 0;
+    }
+  }
+}
+
+// Close buttons.
+.close {
+  .mono;
+  .center;
+  position: absolute;
+  z-index: 100;
+  right: 0;
+  top: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin: 10px;
+  font-size: 46px;
+  font-weight: 100;
+  cursor: pointer;
+  opacity: .8;
+  transition: transform .25s, opacity .25s;
+  line-height: 90%;
+  padding-left: 4px;
+  user-select: none;
+
+  &.light {
+    color: @light-txt;
+    border: 1px solid currentColor;
+    background: rgba(0,0,0,.5);
+  }
+
+  &.dark {
+    color: @code-gray;
+    border: 1px solid currentColor;
+    background: rgba(255,255,255,.5);
+  }
+
+  &:hover {
+    transform: rotate(180deg);
+    opacity: 0.5;
+  }
+}
+
+// Links.
+a {
+  color: @link;
+  text-decoration: none;
+  transition: color .25s;
+
+  &:hover {
+    color: @link-hover;
+  }
+}
+
+// Headings.
+h1, h2, h3, h4, h5 {
+  .bebas;
+  margin: 15px 0;
+  font-weight: normal;
+  font-size: 3.5em;
+  line-height: 0.8em;
+}
+
+h2 {
+  font-size: 2.5em;
+}
+
+h3 {
+  font-size: 2.3em;
+}
+
+h4 {
+  font-size: 2em;
+}
+
+h5 {
+  font-size: 1.8em;
+}
+
+
+
+@media screen and (max-width: @mobile) {
+  h1 {
+    font-size: 3em;
+  }
+
+  h2 {
+    font-size: 2.2em;
+  }
+
+  h3 {
+    font-size: 2em;
+  }
+
+  h4 {
+    font-size: 1.7em;
+  }
+
+  h5 {
+    font-size: 1.5em;
+  }
+}

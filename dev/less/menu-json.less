@@ -1,0 +1,97 @@
+#container {
+  flex-direction: column;
+}
+
+.my-name {
+  color: @light-txt;
+  position: relative;
+  font-size: 10vmin;
+  margin-bottom: 5vmin;
+  opacity: 0;
+  transition: opacity 2s ease-in;
+
+  // &:after {
+  //   content: 'Aaron Cordova';
+  //   position: absolute;
+  //   top: 0;
+  //   opacity: 0.1;
+  //   right: -3vmin;
+  //   transform: skew(-60deg);
+  // }
+
+
+  &.show {
+    opacity: 1
+  }
+
+  .phrase {
+    font-size: .2em;
+    font-weight: 100;
+    letter-spacing: 4.5vmin;
+    width: 100%;
+    bottom: -1vmin;
+    padding-left: 3.3vmin;
+    margin-top: -1vmin;
+    position: relative;
+
+    &:after {
+      content: 'WEB DEVELOPER';
+      position: absolute;
+      top: 0.7vmin;
+      right: 0.5vmin;
+      transform: skew(0deg) scaleY(0);
+      opacity: 0.3;
+      text-shadow: 0 0 1px black, 0 0 1px black, 0 0 1px black;
+      transition: text-shadow 2s, transform 2s, right 2s, opacity 2s, top 2s;
+    }
+
+    &.light-change:after {
+      text-shadow: 0 0 1px white, 0 0 1px white, 0 0 1px white;
+      right: -2.25vmin;
+      transform: skew(-60deg) scaleY(2);
+      opacity: 0.15;
+      top: -0.6vmin;
+    }
+  }
+}
+
+#menu-json {
+  font-size: 4.5vmin;
+  color: @light-txt;
+  line-height: 1.3em;
+
+  span {
+    line-height: 1em;
+    font-size: 3.5vmin;
+    font-weight: bold;
+  }
+
+  a {
+    text-decoration: none;
+    color: gray;
+    transition: color .2s;
+  }
+
+  &.enabled {
+    a {
+      color: yellow;
+
+      &:hover {
+        color: #c0392b;
+      }
+    }
+  }
+
+  // Style to make the cursor drop.
+  .typer::after {
+    transition: margin-top 1s ease-in, margin-left 2s, transform 2s;
+    margin-top: .2em;
+  }
+
+  .typer.drop::after {
+    margin-top: 50vh;
+    margin-left: 4vw;
+    transform: rotate(90deg);
+    animation: none; // Solid cursor when dropping.
+  }
+}
