@@ -55,7 +55,7 @@ App.Views.AwesomeResumeView = Backbone.View.extend({
   close: function() {
     if(this.isOpen) { // Rejects the opening transition.
       App.menuClickable = true;
-      this.remove();
+      App.kill(this);
     }
 
     this.isOpen = true;

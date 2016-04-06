@@ -24,7 +24,7 @@ App.Views.TyperDemoView = Backbone.View.extend({
     document.body.dispatchEvent(CustomEvent('killTyper'));
 
     this.$el.fadeOut(1000, function() {
-      _this.remove();
+      App.kill(_this);
     });
   }
 });

@@ -1,4 +1,4 @@
-App.Views.ProjectsPageView = Backbone.View.extend({
+App.Views.ProjectsView = Backbone.View.extend({
   id: 'projects-page',
   className: 'page full-size center',
   initialize: function() {
@@ -40,7 +40,8 @@ App.Views.ProjectsPageView = Backbone.View.extend({
   close: function(e) {
     if(this.isOpen) { // Rejects the opening transition.
       App.menuClickable = true;
-      this.remove();
+      if(App.demoView) App.demoView.remove();
+      App.kill(this);
     }
 
     this.isOpen = true;
@@ -50,7 +51,7 @@ App.Views.ProjectsPageView = Backbone.View.extend({
 
     if(demo) {
       e.preventDefault();
-      App.currentView = new App.Views[demo]();
+      App.demoView = new App.Views[demo]();
     }
   },
   demoMouseOver: function(e) {

@@ -66,7 +66,7 @@ App.Views.ContactView = Backbone.View.extend({
 
       App.menuClickable = true;
       this.$el.fadeOut(500, function() {
-        _this.remove();
+        App.kill(_this);
       });
     }
     this.isOpen = true;

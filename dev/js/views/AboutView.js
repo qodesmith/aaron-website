@@ -1,4 +1,4 @@
-App.Views.AboutPageView = Backbone.View.extend({
+App.Views.AboutView = Backbone.View.extend({
   id: 'about-page',
   className: 'page full-size sans',
   initialize: function() {
@@ -36,7 +36,7 @@ App.Views.AboutPageView = Backbone.View.extend({
   close: function(e) {
     if(this.isOpen) { // Rejects the opening transition.
       App.menuClickable = true;
-      this.remove();
+      App.kill(this);
     }
 
     this.isOpen = true;

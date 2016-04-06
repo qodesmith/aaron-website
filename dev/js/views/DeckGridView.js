@@ -37,7 +37,7 @@ App.Views.DeckGridView = Backbone.View.extend({
     e.stopPropagation();
   },
   removeMe: function() {
-    if(this.transitions === 1) this.remove();
+    if(this.transitions === 1) App.kill(this);
     this.transitions++;
   },
   removeDeckListeners: function() {

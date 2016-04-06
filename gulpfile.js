@@ -61,7 +61,7 @@ gulp.task('scripts', function() {
     .pipe(concat.header('(function(){var Backbone,$,jQuery,_,Handlebars,thingToHTML,App,typer;'))
     // .pipe(concat.header('(function(){')) // ALLOW GLOBAL VARIABLES
     .pipe(concat.footer('\n})();'))
-    .pipe(uglify()) // Use for production.
+    // .pipe(uglify()) // Use for production.
     .pipe(gulp.dest('public'));
 });
 

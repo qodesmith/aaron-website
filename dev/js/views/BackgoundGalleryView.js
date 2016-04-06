@@ -36,7 +36,7 @@ App.Views.BackgroundGalleryView = Backbone.View.extend({
   removeMe: function() {
     if(this.transitions === 1) {
       bgImageGallery('stop');
-      this.remove();
+      App.kill(this);
     }
     this.transitions++;
   },
