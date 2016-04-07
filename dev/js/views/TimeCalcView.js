@@ -2,6 +2,7 @@ App.Views.TimeCalcView = Backbone.View.extend({
   id: 'time-calc',
   className: 'full-size flex-centered',
   initialize: function() {
+    App.router.navigate('//time-calculator');
     this.transitions = 0;
     this.html = App.templates.TimeCalcView();
     this.render();

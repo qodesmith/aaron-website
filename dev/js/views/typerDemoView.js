@@ -2,6 +2,8 @@ App.Views.TyperDemoView = Backbone.View.extend({
   id: 'typer-demonstration',
   className: 'full-size',
   initialize: function() {
+    this.typer = true;
+    App.router.navigate('//typer');
     this.html = App.templates.TyperDemoView();
     this.render();
   },

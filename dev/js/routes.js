@@ -1,12 +1,77 @@
 App.Router = Backbone.Router.extend({
   routes: {
+    // MAIN ROUTES
     '': 'index',
     'about': 'about',
     'projects': 'projects',
     'regular-resume': 'regularResume',
     'nerdy-resume': 'nerdyResume',
-    'contact': 'contact'
+    'contact': 'contact',
+
+    // SINGLE-PROJECT ROUTES
+    'typer': 'typer',
+    'jac-sound-factory': 'jacSoundFactory',
+    'time-calculator': 'timeCalulator',
+    'deck-grid': 'deckGrid',
+    'background-gallery': 'bgGallery'
   },
+
+  // HELPER FUNCTIONS
+  checkHomePage: function() {
+    // Exit if homepage is already rendered.
+    if(App.homePage) return;
+
+    // This will cause the homepage view to render without typing.
+    App.homeRendered = true;
+
+    // Render the homepage.
+    App.homePage = new App.Views.HomeView();
+  },
+  createView: function(name, project) {
+    App.menuClickable = false;
+
+    // Kill any open demo view.
+    if(App.demoView) {
+      var singleProject = App.demoView;
+      singleProject.$el.fadeOut(250, function() { App.kill(singleProject) });
+    }
+
+    // DEMO VIEWS
+    if(project) {
+      // If ProjectsView IS open...
+      if(App.currentView && App.currentView.projects) {
+        // Create the single project view.
+        App.demoView = new App.Views[name]();
+
+      // If ProjectsView is NOT open...
+      } else {
+        // Kill the current view.
+        if(App.currentView) {
+          var view = App.currentView;
+          view.$el.fadeOut(250, function() { App.kill(view) });
+        }
+
+        // Create the ProjectsView.
+        App.currentView = new App.Views.ProjectsView();
+
+        // Create the single project view.
+        App.demoView = new App.Views[name]();
+      }
+
+    // ALL OTHER VIEWS
+    } else {
+      // Kill current view.
+      if(App.currentView) {
+        var view = App.currentView;
+        view.$el.fadeOut(250, function() { App.kill(view) });
+      }
+
+      // Create new view.
+      App.currentView = new App.Views[name]();
+    }
+  },
+
+  // MAIN ROUTES
   index: function() {
     console.log('index route');
 
@@ -35,6 +100,7 @@ App.Router = Backbone.Router.extend({
     console.log('projects route');
     this.checkHomePage();
     this.createView('ProjectsView');
+    // App.currentView.name = 'Projects';
   },
   regularResume: function() {
     console.log('regular route');
@@ -51,29 +117,26 @@ App.Router = Backbone.Router.extend({
     this.checkHomePage();
     this.createView('ContactView');
   },
-  checkHomePage: function() {
-    // Exit if homepage is already rendered.
-    if(App.homePage) return;
 
-    // This will cause the homepage view to render without typing.
-    App.homeRendered = true;
-
-    // Render the homepage.
-    App.homePage = new App.Views.HomeView();
+  // SINGLE-PROJECT ROUTES
+  typer: function() {
+    console.log('typer route hit');
+    this.checkHomePage();
+    this.createView('TyperDemoView', true);
   },
-  createView: function(name) {
-    App.menuClickable = false;
-    if(App.currentView) {
-
-      // Cache the view so as not to collide with App.currentView below.
-      var view = App.currentView;
-
-      view.$el.fadeOut(250, function() {
-        view.remove();
-        view.undelegateEvents();
-      });
-    }
-
-    App.currentView = new App.Views[name]();
+  jacSoundFactory: function() {
+    console.log('JAC Sound Factory is an external link.');
+  },
+  timeCalulator: function() {
+    this.checkHomePage();
+    this.createView('TimeCalcView', true);
+  },
+  deckGrid: function() {
+    this.checkHomePage();
+    this.createView('DeckGridView', true);
+  },
+  bgGallery: function() {
+    this.checkHomePage();
+    this.createView('BackgroundGalleryView', true);
   }
 });

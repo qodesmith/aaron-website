@@ -18,9 +18,10 @@ App = {
     $(el).addClass(dir[num]);
   },
   // Prevent Backbone zombie views from forming: http://goo.gl/OJEqsr
-  kill: function(view) {
+  kill: function(view, route) {
+    if(view.typer) document.dispatchEvent(CustomEvent('killTyper'));
     view.remove(); // Remove the view from the DOM.
     view.undelegateEvents(); // Unbind the view's delegated events.
-    App.router.navigate(''); // Update the router to reflect the home page.
+    App.router.navigate(route ? route : ''); // Update the router to reflect a given route or the home page.
   }
 };

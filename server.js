@@ -32,6 +32,11 @@ app.post('/contact', function(req, res) {
   res.send(true);
 });
 
+app.all('*', function(req, res) {
+  // res.send('catch-all route hit!');
+  res.send('');
+});
+
 app.listen(process.env.PORT || 9001, '0.0.0.0', function() {
   console.log('Listening on port ' + (process.env.PORT || 9001));
 });

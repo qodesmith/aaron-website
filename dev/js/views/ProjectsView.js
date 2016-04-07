@@ -1,8 +1,10 @@
+
 App.Views.ProjectsView = Backbone.View.extend({
   id: 'projects-page',
   className: 'page full-size center',
   initialize: function() {
-    // this.template = Handlebars.compile($('#projects-template').html());
+    this.projects = true;
+    App.router.navigate('projects');
     this.html = App.templates.ProjectsPageView();
     this.render();
   },
@@ -39,19 +41,19 @@ App.Views.ProjectsView = Backbone.View.extend({
   },
   close: function(e) {
     if(this.isOpen) { // Rejects the opening transition.
+      App.projectsRendered = false;
       App.menuClickable = true;
-      if(App.demoView) App.demoView.remove();
       App.kill(this);
     }
 
     this.isOpen = true;
   },
   demoLaunch: function(e) {
-    var demo = $(e.target).closest('.demo').data('demo');
+    var demo = $(e.currentTarget).data('demo');
 
     if(demo) {
       e.preventDefault();
-      App.demoView = new App.Views[demo]();
+      App.demoView = new App.Views[demo + 'View']();
     }
   },
   demoMouseOver: function(e) {

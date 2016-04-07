@@ -3,6 +3,8 @@ App.Views.AboutView = Backbone.View.extend({
   className: 'page full-size sans',
   initialize: function() {
     // this.template = Handlebars.compile($('#about-template').html());
+    this.typer = true;
+    App.router.navigate('//about');
     this.html = App.templates.AboutPageView();
     this.render();
   },

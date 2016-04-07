@@ -41,6 +41,7 @@ gulp.task('handlebars', function() {
       root: 'App.templates', // Where to access the templates from.
       noRedeclare: true
     }))
+    .on('error', onError)
     .pipe(concat('templates.js'))
     .pipe(gulp.dest('dev/js'));
 });
@@ -50,8 +51,7 @@ gulp.task('handlebars', function() {
 gulp.task('scripts', function() {
   return gulp.src([
     'dev/js/vendors.min.js', // Needed 1st.
-    '!dev/js/dependencies.js', // Browserify require modules.
-    'dev/js/**/!(app|templates)*.js',
+    'dev/js/**/!(app|templates|dependencies)*.js',
     'dev/js/templates.js',
     'dev/js/app.js', // Needed last.
   ])
@@ -61,7 +61,7 @@ gulp.task('scripts', function() {
     .pipe(concat.header('(function(){var Backbone,$,jQuery,_,Handlebars,thingToHTML,App,typer;'))
     // .pipe(concat.header('(function(){')) // ALLOW GLOBAL VARIABLES
     .pipe(concat.footer('\n})();'))
-    .pipe(uglify()) // Use for production.
+    // .pipe(uglify()) // Use for production.
     .pipe(gulp.dest('public'));
 });
 
@@ -98,8 +98,9 @@ gulp.task('less', function() {
 // WATCH
 gulp.task('watch', function() {
   gulp.watch('dev/templates/**/*.hbs', ['handlebars']);
-  gulp.watch('dev/js/**/*.js', ['scripts']);
+  gulp.watch('dev/js/**/!(dependencies)*.js', ['scripts']);
   gulp.watch('dev/less/**/*.less', ['less']);
+  gulp.watch('dev/js/dependencies.js', ['browserify']);
 });
 
 // DEFAULT
