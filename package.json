@@ -20,8 +20,8 @@
     "handlebars": "^4.0.5",
     "jquery": "^2.2.0",
     "mailgun-js": "^0.7.7",
-    "thing-to-html": "^1.0.2",
-    "typer-js": "^2.0.6",
+    "thing-to-html": "^1.0.6",
+    "typer-js": "^2.0.7",
     "underscore": "^1.8.3"
   },
   "devDependencies": {

@@ -30,6 +30,7 @@ App.Views.HomeView = Backbone.View.extend({
   },
   renderWhole: function() {
     App.menuClickable = true;
+    $('body').addClass('sans full-size');
     this.$el.append(this.html);
     $('body').append(this.$el);
   },

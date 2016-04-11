@@ -9,7 +9,38 @@ var mailgun = require('mailgun-js')({
 var app = express();
 
 app.use(bp.urlencoded({extended: false}));
-app.use(express.static(__dirname + '/public', {extensions: false}));
+app.use(express.static(__dirname + '/public'));
+
+
+////////////////
+// GET routes //
+////////////////
+
+app.get('*', function(req, res) {
+  console.log('catch-all route hit');
+  // Build a set of '../' according to the route requested.
+  var path = '';
+  var num = req.params[0].split('/').length - 2;
+  for(var i = 0; i < num; i++) {
+    path += '../';
+  }
+
+  // Send the JavaScript & styles. Let the front-end worry about what to render.
+  var styles = '<link rel="stylesheet" href="' + path + 'styles.css">';
+  var scripts = '<script src="' + path + 'all.min.js"></script>';
+  var homepage = '<body class="sans full-size">' + styles + scripts + '</body>';
+  res.send(homepage);
+});
+
+// app.get(/(about|projects|nerdy-resume|regular-resume)/, function(req, res) {
+//   console.log('multi-route was hit!');
+//   res.send(homepage);
+// });
+
+
+/////////////////
+// POST routes //
+/////////////////
 
 app.post('/contact', function(req, res) {
   console.log(req.body);
@@ -30,11 +61,6 @@ app.post('/contact', function(req, res) {
   });
 
   res.send(true);
-});
-
-app.all('*', function(req, res) {
-  // res.send('catch-all route hit!');
-  res.send('');
 });
 
 app.listen(process.env.PORT || 9001, '0.0.0.0', function() {

@@ -4,7 +4,7 @@ App.Views.AboutView = Backbone.View.extend({
   initialize: function() {
     // this.template = Handlebars.compile($('#about-template').html());
     this.typer = true;
-    App.router.navigate('//about');
+    App.router.navigate('about');
     this.html = App.templates.AboutPageView();
     this.render();
   },
@@ -31,7 +31,7 @@ App.Views.AboutView = Backbone.View.extend({
     e.stopPropagation();
   },
   hide: function() {
-    document.body.dispatchEvent(CustomEvent('killTyper'));
+    document.body.dispatchEvent(new CustomEvent('killTyper'));
     bgImageGallery('stop');
     this.$el.removeClass('show');
   },

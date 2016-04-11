@@ -1,5 +1,6 @@
 App.Router = Backbone.Router.extend({
   routes: {
+    'test': 'test',
     // MAIN ROUTES
     '': 'index',
     'about': 'about',
@@ -13,7 +14,15 @@ App.Router = Backbone.Router.extend({
     'jac-sound-factory': 'jacSoundFactory',
     'time-calculator': 'timeCalulator',
     'deck-grid': 'deckGrid',
-    'background-gallery': 'bgGallery'
+    'background-gallery': 'bgGallery',
+    '*404': 'fourZeroFour'
+  },
+  test: function() {
+    console.log('test route hit!');
+  },
+  fourZeroFour: function() {
+    console.log(404);
+    App.currentView = new App.Views.FourZeroFourView();
   },
 
   // HELPER FUNCTIONS
@@ -26,6 +35,7 @@ App.Router = Backbone.Router.extend({
 
     // Render the homepage.
     App.homePage = new App.Views.HomeView();
+    console.log('checkHomePage complete');
   },
   createView: function(name, project) {
     App.menuClickable = false;
@@ -34,38 +44,28 @@ App.Router = Backbone.Router.extend({
     if(App.demoView) {
       var singleProject = App.demoView;
       singleProject.$el.fadeOut(250, function() { App.kill(singleProject) });
+      App.demoView = '';
+    }
+
+    // Kill any open regular view EXCEPT ProjectsView.
+    if(App.currentView && !App.currentView.projects) {
+      var view = App.currentView;
+      view.$el.fadeOut(250, function() { App.kill(view) });
     }
 
     // DEMO VIEWS
     if(project) {
-      // If ProjectsView IS open...
-      if(App.currentView && App.currentView.projects) {
-        // Create the single project view.
-        App.demoView = new App.Views[name]();
-
       // If ProjectsView is NOT open...
-      } else {
-        // Kill the current view.
-        if(App.currentView) {
-          var view = App.currentView;
-          view.$el.fadeOut(250, function() { App.kill(view) });
-        }
-
+      if(App.currentView && !App.currentView.projects) {
         // Create the ProjectsView.
         App.currentView = new App.Views.ProjectsView();
-
-        // Create the single project view.
-        App.demoView = new App.Views[name]();
       }
+
+      // Create the single project view.
+      App.demoView = new App.Views[name]();
 
     // ALL OTHER VIEWS
     } else {
-      // Kill current view.
-      if(App.currentView) {
-        var view = App.currentView;
-        view.$el.fadeOut(250, function() { App.kill(view) });
-      }
-
       // Create new view.
       App.currentView = new App.Views[name]();
     }

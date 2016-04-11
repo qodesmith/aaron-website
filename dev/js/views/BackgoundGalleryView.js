@@ -2,7 +2,7 @@ App.Views.BackgroundGalleryView = Backbone.View.extend({
   id: 'background-gallery',
   className: 'full-size',
   initialize: function() {
-    App.router.navigate('//background-gallery');
+    App.router.navigate('background-gallery');
     this.transitions = 0;
     this.html = App.templates.BackgroundGalleryView();
     this.render();

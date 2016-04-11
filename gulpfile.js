@@ -58,8 +58,8 @@ gulp.task('scripts', function() {
     .pipe(concat('all.min.js'))
     // Wrap the concatenated file in a SEAF.
     // Declaring the var's prevents dependencies.js from scoping them globally.
-    .pipe(concat.header('(function(){var Backbone,$,jQuery,_,Handlebars,thingToHTML,App,typer;'))
-    // .pipe(concat.header('(function(){')) // ALLOW GLOBAL VARIABLES
+    // .pipe(concat.header('(function(){var Backbone,$,jQuery,_,Handlebars,thingToHTML,App,typer;'))
+    .pipe(concat.header('(function(){')) // ALLOW GLOBAL VARIABLES
     .pipe(concat.footer('\n})();'))
     // .pipe(uglify()) // Use for production.
     .pipe(gulp.dest('public'));
