@@ -3,6 +3,7 @@ App.Views.ProjectsView = Backbone.View.extend({
   id: 'projects-page',
   className: 'page full-size center',
   initialize: function() {
+    App.router.navigate('projects');
     this.projects = true;
     this.html = App.templates.ProjectsPageView();
     this.render();
@@ -43,6 +44,7 @@ App.Views.ProjectsView = Backbone.View.extend({
       App.projectsRendered = false;
       App.menuClickable = true;
       App.kill(this);
+      App.router.navigate('');
     }
 
     this.isOpen = true;

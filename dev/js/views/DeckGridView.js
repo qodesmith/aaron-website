@@ -2,6 +2,7 @@ App.Views.DeckGridView = Backbone.View.extend({
   id: 'deck-grid',
   className: 'full-size',
   initialize: function() {
+    App.router.navigate('projects/deck-grid');
     this.transitions = 0;
     this.html = App.templates.DeckGridView();
     this.render();
@@ -37,7 +38,10 @@ App.Views.DeckGridView = Backbone.View.extend({
     e.stopPropagation();
   },
   removeMe: function() {
-    if(this.transitions === 1) App.kill(this);
+    if(this.transitions === 1){
+      App.kill(this);
+      App.router.navigate('projects');
+    }
     this.transitions++;
   },
   removeDeckListeners: function() {

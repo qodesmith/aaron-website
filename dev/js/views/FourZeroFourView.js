@@ -24,5 +24,6 @@ App.Views.FourZeroFourView = Backbone.View.extend({
     e.preventDefault;
     App.kill(this);
     App.homePage = new App.Views.HomeView();
+    App.router.navigate('');
   }
 });

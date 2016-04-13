@@ -2,6 +2,7 @@ App.Views.TimeCalcView = Backbone.View.extend({
   id: 'time-calc',
   className: 'full-size flex-centered',
   initialize: function() {
+    App.router.navigate('projects/time-calculator');
     this.transitions = 0;
     this.html = App.templates.TimeCalcView();
     this.render();
@@ -36,7 +37,10 @@ App.Views.TimeCalcView = Backbone.View.extend({
     e.stopPropagation();
   },
   removeMe: function() {
-    if(this.transitions === 1) App.kill(this);
+    if(this.transitions === 1) {
+      App.kill(this);
+      App.router.navigate('projects');
+    }
     this.transitions++;
   }
 });

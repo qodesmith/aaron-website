@@ -2,6 +2,7 @@ App.Views.RegularResumeView = Backbone.View.extend({
   id: 'regular-resume',
   className: 'page full-size',
   initialize: function() {
+    App.router.navigate('regular-resume');
     this.$el.html(App.templates.RegularResume());
     this.render();
   },
@@ -33,6 +34,7 @@ App.Views.RegularResumeView = Backbone.View.extend({
     if(this.isOpen) { // Rejects the opening transition.
       App.menuClickable = true;
       App.kill(this);
+      App.router.navigate('');
     }
 
     this.isOpen = true;

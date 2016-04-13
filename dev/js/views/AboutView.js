@@ -3,6 +3,7 @@ App.Views.AboutView = Backbone.View.extend({
   className: 'page full-size sans',
   initialize: function() {
     // this.template = Handlebars.compile($('#about-template').html());
+    App.router.navigate('about');
     this.typer = true;
     this.html = App.templates.AboutPageView();
     this.render();
@@ -38,6 +39,7 @@ App.Views.AboutView = Backbone.View.extend({
     if(this.isOpen) { // Rejects the opening transition.
       App.menuClickable = true;
       App.kill(this);
+      App.router.navigate('');
     }
 
     this.isOpen = true;

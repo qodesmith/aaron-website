@@ -26,8 +26,10 @@ App = {
     if(view === App.demoView) App.demoView = '';
     if(view === App.currentView) App.currentView = '';
 
-    view.remove(); // Remove the view from the DOM.
     view.undelegateEvents(); // Unbind the view's delegated events.
+    view.$el.fadeOut(250, function() {
+      view.remove(); // Remove the view from the DOM.
+    });
     // App.router.navigate(route ? route : ''); // Update the router to reflect a given route or the home page.
   }
 };
