@@ -2,7 +2,6 @@ App.Views.AwesomeResumeView = Backbone.View.extend({
   id: 'awesome-resume',
   className: 'page full-size mono',
   initialize: function() {
-    App.router.navigate('nerdy-resume');
     this.$el.html(App.templates.AwesomeResume());
     this.render();
   },

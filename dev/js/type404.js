@@ -1,5 +1,4 @@
 function type404(num, target) {
-  console.log(num)
   if(num === 0) {
     typer(target)
       .run(function(el) {
@@ -43,7 +42,7 @@ function type404(num, target) {
     typer(target)
       .run(function(el) {
         $(el).addClass('kalam');
-        $(el).parent().prepend($('<h1 class="underline">The Kalam Cosmological Argument</h1>'));
+        $(el).parent().prepend($('<h1>The Kalam Cosmological Argument</h1>'));
       })
       .pause(1000)
       .line('Whatever begins to exist <span style="color: lightgreen">has a cause.</span>')
@@ -51,5 +50,15 @@ function type404(num, target) {
       .line('The universe began to exist.')
       .pause(750)
       .line('Therefore, the universe <span style="color: lightgreen">has a cause.</span>')
+  } else if(num === 2) {
+    var host = window.location.hostname;
+    var path = window.location.pathname;
+
+    typer(target)
+      .cursor({block: true})
+      .run(function(el) {
+        $(el).addClass('apparently');
+      })
+      .line('Apparently, ' + host + '<span style="color: yellow">' + path + "</span> isn't a thing.")
   }
 }

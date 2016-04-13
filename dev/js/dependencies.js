@@ -12,13 +12,6 @@ App = {
   Views: {},
   templates: {},
 
-  // Check the url - decipher between direct page visits & other.
-  checkUrl: function() {
-    var pathname = window.location.pathname.slice(1); // Remove preceding '/';
-    if(pathname[pathname.length - 1] === '/') pathname = pathname.slice(0, -1); // Remove trailing '/';
-    console.log('pathname:', pathname);
-  },
-
   // Generate & add a random class as a direction for the view to slide in from.
   randomDir: function(el) {
     var dir = ['left', 'right', 'top', 'bottom'];
@@ -28,10 +21,13 @@ App = {
 
   // Prevent Backbone zombie views from forming: http://goo.gl/OJEqsr
   kill: function(view, route) {
+    if(!view) return;
     if(view.typer) document.body.dispatchEvent(new CustomEvent('killTyper'));
-    if(App.demoView) App.demoView = '';
+    if(view === App.demoView) App.demoView = '';
+    if(view === App.currentView) App.currentView = '';
+
     view.remove(); // Remove the view from the DOM.
     view.undelegateEvents(); // Unbind the view's delegated events.
-    App.router.navigate(route ? route : ''); // Update the router to reflect a given route or the home page.
+    // App.router.navigate(route ? route : ''); // Update the router to reflect a given route or the home page.
   }
 };

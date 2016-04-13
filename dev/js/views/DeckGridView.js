@@ -2,7 +2,6 @@ App.Views.DeckGridView = Backbone.View.extend({
   id: 'deck-grid',
   className: 'full-size',
   initialize: function() {
-    App.router.navigate('deck-grid');
     this.transitions = 0;
     this.html = App.templates.DeckGridView();
     this.render();

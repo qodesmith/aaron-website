@@ -2,6 +2,9 @@
   .mono;
   flex-direction: column;
   position: relative;
+  font-size: 1.3em;
+  overflow-y: scroll;
+  padding: 50px 10px 0;
 
   &:before {
     content: '404';
@@ -13,7 +16,6 @@
   }
 
   .home {
-    margin: 0 auto;
     padding: 10px;
     position: absolute;
     top: 0;
@@ -22,7 +24,7 @@
     font-size: 16px;
     border: 1px solid transparent;
     background: rgba(255,255,255,.25);
-    margin: 10px 0 0 10px;
+    margin: 10px 0 0;
 
     &:hover {
       border: 1px solid currentColor;
@@ -30,8 +32,6 @@
   }
 
   .abyss {
-    font-size: 1.3em;
-
     div {
       text-align: center;
     }
@@ -40,5 +40,23 @@
   .kalam {
     .sans;
     font-size: 1.7em;
+
+    div {
+      border-bottom: 1px solid rgba(255,255,255,.5);
+      padding: 20px 0;
+    }
+
+    div:last-of-type {
+      border-bottom: none;
+    }
+  }
+
+  @media screen and (max-width: @mobile) {
+    justify-content: flex-start;
+    font-size: 1em;
+
+    .apparently {
+      word-break: break-all;
+    }
   }
 }

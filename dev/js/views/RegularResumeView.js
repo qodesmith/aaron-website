@@ -2,7 +2,6 @@ App.Views.RegularResumeView = Backbone.View.extend({
   id: 'regular-resume',
   className: 'page full-size',
   initialize: function() {
-    App.router.navigate('regular-resume');
     this.$el.html(App.templates.RegularResume());
     this.render();
   },

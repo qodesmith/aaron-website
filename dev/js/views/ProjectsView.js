@@ -4,7 +4,6 @@ App.Views.ProjectsView = Backbone.View.extend({
   className: 'page full-size center',
   initialize: function() {
     this.projects = true;
-    App.router.navigate('projects');
     this.html = App.templates.ProjectsPageView();
     this.render();
   },

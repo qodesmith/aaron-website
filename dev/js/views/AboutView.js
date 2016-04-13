@@ -4,7 +4,6 @@ App.Views.AboutView = Backbone.View.extend({
   initialize: function() {
     // this.template = Handlebars.compile($('#about-template').html());
     this.typer = true;
-    App.router.navigate('about');
     this.html = App.templates.AboutPageView();
     this.render();
   },

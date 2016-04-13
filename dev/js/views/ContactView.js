@@ -2,7 +2,6 @@ App.Views.ContactView = Backbone.View.extend({
   id: 'contact',
   className: 'full-size page',
   initialize: function() {
-    App.router.navigate('contact');
     this.html = App.templates.ContactView();
     this.render();
   },

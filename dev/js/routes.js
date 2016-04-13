@@ -1,6 +1,5 @@
 App.Router = Backbone.Router.extend({
   routes: {
-    'test': 'test',
     // MAIN ROUTES
     '': 'index',
     'about': 'about',
@@ -10,19 +9,10 @@ App.Router = Backbone.Router.extend({
     'contact': 'contact',
 
     // SINGLE-PROJECT ROUTES
-    'typer': 'typer',
-    'jac-sound-factory': 'jacSoundFactory',
-    'time-calculator': 'timeCalulator',
-    'deck-grid': 'deckGrid',
-    'background-gallery': 'bgGallery',
+    'projects/:id': 'projects',
+
+    // 404 ROUTE
     '*404': 'fourZeroFour'
-  },
-  test: function() {
-    console.log('test route hit!');
-  },
-  fourZeroFour: function() {
-    console.log(404);
-    App.currentView = new App.Views.FourZeroFourView();
   },
 
   // HELPER FUNCTIONS
@@ -35,29 +25,28 @@ App.Router = Backbone.Router.extend({
 
     // Render the homepage.
     App.homePage = new App.Views.HomeView();
-    console.log('checkHomePage complete');
   },
   createView: function(name, project) {
     App.menuClickable = false;
 
     // Kill any open demo view.
     if(App.demoView) {
-      var singleProject = App.demoView;
-      singleProject.$el.fadeOut(250, function() { App.kill(singleProject) });
+      var demo = App.demoView;
+      demo.$el.fadeOut(250, function() { App.kill(demo) });
       App.demoView = '';
     }
 
-    // Kill any open regular view EXCEPT ProjectsView.
-    if(App.currentView && !App.currentView.projects) {
-      var view = App.currentView;
-      view.$el.fadeOut(250, function() { App.kill(view) });
-    }
-
-    // DEMO VIEWS
+    // CREATE A DEMO VIEW
     if(project) {
-      // If ProjectsView is NOT open...
-      if(App.currentView && !App.currentView.projects) {
-        // Create the ProjectsView.
+      // If NO view is open, create ProjectsView.
+      if(!App.currentView) {
+        App.currentView = new App.Views.ProjectsView();
+
+      // Kill any open regular view EXCEPT ProjectsView, create ProjectsView.
+      } else if(!App.currentView.projects) {
+        var view = App.currentView;
+        view.$el.fadeOut(250, function() { App.kill(view) });
+
         App.currentView = new App.Views.ProjectsView();
       }
 
@@ -66,6 +55,19 @@ App.Router = Backbone.Router.extend({
 
     // ALL OTHER VIEWS
     } else {
+      // Avoid re-creating ProjectsView.
+      try {
+        if(App.currentView.projects) {
+          console.log('Refusing to re-create ProjectsView');
+          return;
+        }
+      } catch(err) {
+        console.log('No ProjectsView to re-create. Creating...');
+      }
+
+      // Kill the open view.
+      App.kill(App.currentView);
+
       // Create new view.
       App.currentView = new App.Views[name]();
     }
@@ -75,18 +77,9 @@ App.Router = Backbone.Router.extend({
   index: function() {
     console.log('index route');
 
-    // Close any open view when manually navigating
-    // to the home page from another page.
-    if(App.homePage) {
-
-      // Click on the close button of the view.
-      $('.close').click();
-
-      // App.currentView.$el.fadeOut(250, function() {
-      //   App.currentView.remove();
-      //   App.menuClickable = true;
-      // });
-    }
+    // Kill all open views.
+    App.kill(App.demoView);
+    App.kill(App.currentView);
 
     // Render the homepage.
     if(!App.homePage) App.homePage = new App.Views.HomeView();
@@ -96,11 +89,34 @@ App.Router = Backbone.Router.extend({
     this.checkHomePage();
     this.createView('AboutView');
   },
-  projects: function() {
+  projects: function(id) {
+    // Single-project routes.
+    if(id) {
+      console.log('projects/' + id + ' route');
+      var project;
+      var route;
+      ['typer', 'time-calculator', 'deck-grid', 'background-gallery'].some(function(name) {
+        if(id === name) {
+          route = name;
+          if(id === 'typer')              project = 'TyperDemoView';
+          if(id === 'time-calculator')    project = 'TimeCalcView';
+          if(id === 'deck-grid')          project = 'DeckGridView';
+          if(id === 'background-gallery') project = 'BackgroundGalleryView';
+        }
+      });
+
+      if(project) {
+        this.checkHomePage();
+        return this.createView(project, true);
+      }
+
+      return this.fourZeroFour();
+    }
+
+    // Projects route.
     console.log('projects route');
     this.checkHomePage();
     this.createView('ProjectsView');
-    // App.currentView.name = 'Projects';
   },
   regularResume: function() {
     console.log('regular route');
@@ -118,25 +134,9 @@ App.Router = Backbone.Router.extend({
     this.createView('ContactView');
   },
 
-  // SINGLE-PROJECT ROUTES
-  typer: function() {
-    console.log('typer route hit');
-    this.checkHomePage();
-    this.createView('TyperDemoView', true);
-  },
-  jacSoundFactory: function() {
-    console.log('JAC Sound Factory is an external link.');
-  },
-  timeCalulator: function() {
-    this.checkHomePage();
-    this.createView('TimeCalcView', true);
-  },
-  deckGrid: function() {
-    this.checkHomePage();
-    this.createView('DeckGridView', true);
-  },
-  bgGallery: function() {
-    this.checkHomePage();
-    this.createView('BackgroundGalleryView', true);
+  // 404
+  fourZeroFour: function() {
+    console.log('404 route');
+    App.currentView = new App.Views.FourZeroFourView();
   }
 });
