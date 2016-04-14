@@ -2,6 +2,7 @@ App.Views.AwesomeResumeView = Backbone.View.extend({
   id: 'awesome-resume',
   className: 'page full-size mono',
   initialize: function() {
+    App.router.navigate('nerdy-resume');
     this.$el.html(App.templates.AwesomeResume());
     this.render();
   },
@@ -47,7 +48,7 @@ App.Views.AwesomeResumeView = Backbone.View.extend({
   },
   hide: function() {
     // Remove the event listeners associated with thingToHTML.
-    var killThings = CustomEvent('killThings');
+    var killThings = new CustomEvent('killThings');
     document.body.dispatchEvent(killThings);
 
     this.$el.removeClass('show');
@@ -55,7 +56,8 @@ App.Views.AwesomeResumeView = Backbone.View.extend({
   close: function() {
     if(this.isOpen) { // Rejects the opening transition.
       App.menuClickable = true;
-      this.remove();
+      App.kill(this);
+      App.router.navigate('');
     }
 
     this.isOpen = true;

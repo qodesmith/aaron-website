@@ -2,6 +2,7 @@ App.Views.BackgroundGalleryView = Backbone.View.extend({
   id: 'background-gallery',
   className: 'full-size',
   initialize: function() {
+    App.router.navigate('projects/background-gallery');
     this.transitions = 0;
     this.html = App.templates.BackgroundGalleryView();
     this.render();
@@ -36,7 +37,8 @@ App.Views.BackgroundGalleryView = Backbone.View.extend({
   removeMe: function() {
     if(this.transitions === 1) {
       bgImageGallery('stop');
-      this.remove();
+      App.kill(this);
+      App.router.navigate('projects');
     }
     this.transitions++;
   },

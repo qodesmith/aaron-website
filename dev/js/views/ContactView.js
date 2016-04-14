@@ -2,6 +2,7 @@ App.Views.ContactView = Backbone.View.extend({
   id: 'contact',
   className: 'full-size page',
   initialize: function() {
+    App.router.navigate('contact');
     this.html = App.templates.ContactView();
     this.render();
   },
@@ -66,7 +67,8 @@ App.Views.ContactView = Backbone.View.extend({
 
       App.menuClickable = true;
       this.$el.fadeOut(500, function() {
-        _this.remove();
+        App.kill(_this);
+        App.router.navigate('');
       });
     }
     this.isOpen = true;
@@ -81,6 +83,7 @@ App.Views.ContactView = Backbone.View.extend({
 
       setTimeout(function() {
         _this.close();
+        App.router.navigate('');
       }, 2500);
     }, 0);
   }

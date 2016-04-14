@@ -2,6 +2,8 @@ App.Views.TyperDemoView = Backbone.View.extend({
   id: 'typer-demonstration',
   className: 'full-size',
   initialize: function() {
+    App.router.navigate('projects/typer');
+    this.typer = true;
     this.html = App.templates.TyperDemoView();
     this.render();
   },
@@ -21,10 +23,11 @@ App.Views.TyperDemoView = Backbone.View.extend({
   },
   close: function() {
     var _this = this;
-    document.body.dispatchEvent(CustomEvent('killTyper'));
+    document.body.dispatchEvent(new CustomEvent('killTyper'));
 
     this.$el.fadeOut(1000, function() {
-      _this.remove();
+      App.kill(_this, 'projects');
+      App.router.navigate('projects');
     });
   }
 });

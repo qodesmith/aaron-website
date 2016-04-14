@@ -1,0 +1,62 @@
+#four-zero-four {
+  .mono;
+  flex-direction: column;
+  position: relative;
+  font-size: 1.3em;
+  overflow-y: scroll;
+  padding: 50px 10px 0;
+
+  &:before {
+    content: '404';
+    font-size: 10em;
+    color: rgba(255,255,255,.18);
+    position: absolute;
+    top: 25px;
+    text-shadow: 5px 8px;
+  }
+
+  .home {
+    padding: 10px;
+    position: absolute;
+    top: 0;
+    z-index: 1;
+    border-radius: 5px;
+    font-size: 16px;
+    border: 1px solid transparent;
+    background: rgba(255,255,255,.25);
+    margin: 10px 0 0;
+
+    &:hover {
+      border: 1px solid currentColor;
+    }
+  }
+
+  .abyss {
+    div {
+      text-align: center;
+    }
+  }
+
+  .kalam {
+    .sans;
+    font-size: 1.7em;
+
+    div {
+      border-bottom: 1px solid rgba(255,255,255,.5);
+      padding: 20px 0;
+    }
+
+    div:last-of-type {
+      border-bottom: none;
+    }
+  }
+
+  @media screen and (max-width: @mobile) {
+    justify-content: flex-start;
+    font-size: 1em;
+
+    .apparently {
+      word-break: break-all;
+    }
+  }
+}

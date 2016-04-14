@@ -1,8 +1,10 @@
-App.Views.AboutPageView = Backbone.View.extend({
+App.Views.AboutView = Backbone.View.extend({
   id: 'about-page',
   className: 'page full-size sans',
   initialize: function() {
     // this.template = Handlebars.compile($('#about-template').html());
+    App.router.navigate('about');
+    this.typer = true;
     this.html = App.templates.AboutPageView();
     this.render();
   },
@@ -29,14 +31,15 @@ App.Views.AboutPageView = Backbone.View.extend({
     e.stopPropagation();
   },
   hide: function() {
-    document.body.dispatchEvent(CustomEvent('killTyper'));
+    document.body.dispatchEvent(new CustomEvent('killTyper'));
     bgImageGallery('stop');
     this.$el.removeClass('show');
   },
   close: function(e) {
     if(this.isOpen) { // Rejects the opening transition.
       App.menuClickable = true;
-      this.remove();
+      App.kill(this);
+      App.router.navigate('');
     }
 
     this.isOpen = true;
