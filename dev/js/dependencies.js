@@ -30,6 +30,5 @@ App = {
     view.$el.fadeOut(250, function() {
       view.remove(); // Remove the view from the DOM.
     });
-    // App.router.navigate(route ? route : ''); // Update the router to reflect a given route or the home page.
   }
 };
