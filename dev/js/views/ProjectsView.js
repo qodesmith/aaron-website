@@ -54,6 +54,7 @@ App.Views.ProjectsView = Backbone.View.extend({
 
     if(demo) {
       e.preventDefault();
+      if(App.demoView) return console.log('Demo view already open');
       App.demoView = new App.Views[demo + 'View']();
     }
   },

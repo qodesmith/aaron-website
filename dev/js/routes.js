@@ -31,8 +31,7 @@ App.Router = Backbone.Router.extend({
 
     // Kill any open demo view.
     if(App.demoView) {
-      var demo = App.demoView;
-      demo.$el.fadeOut(250, function() { App.kill(demo) });
+      App.kill(App.demoView);
       App.demoView = '';
     }
 
