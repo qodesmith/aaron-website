@@ -58,7 +58,7 @@ App.Views.ContactView = Backbone.View.extend({
     this.$el.removeClass('show');
     this.closing = true;
   },
-  close: function() {
+  close: function(e) {
     var close = App.dirCheck(e.originalEvent.propertyName);
 
     if(this.closing && close) {
