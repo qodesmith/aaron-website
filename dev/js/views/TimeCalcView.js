@@ -3,7 +3,6 @@ App.Views.TimeCalcView = Backbone.View.extend({
   className: 'full-size flex-centered',
   initialize: function() {
     App.router.navigate('projects/time-calculator');
-    this.transitions = 0;
     this.html = App.templates.TimeCalcView();
     this.render();
   },
@@ -26,21 +25,16 @@ App.Views.TimeCalcView = Backbone.View.extend({
     }, 10);
   },
   events: {
-    'click .close': 'close',
-    'transitionend *': 'noBubble',
-    'transitionend': 'removeMe'
+    'click .close': 'close'
   },
   close: function() {
+    var _this = this;
+    App.menuClickable = true;
+
     this.$el.removeClass('show');
-  },
-  noBubble: function(e) {
-    e.stopPropagation();
-  },
-  removeMe: function() {
-    if(this.transitions === 1) {
-      App.kill(this);
-      App.router.navigate('projects');
-    }
-    this.transitions++;
+
+    setTimeout(function() {
+      App.kill(_this, 'projects', 1);
+    }, 1000);
   }
 });

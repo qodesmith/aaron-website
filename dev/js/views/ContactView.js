@@ -24,7 +24,6 @@ App.Views.ContactView = Backbone.View.extend({
     'click .close': 'hide',
     'click #submit': 'submit',
     'input .form-field': 'removeError',
-    'transitionend *': 'noBubble',
     'transitionend': 'close'
   },
   submit: function(e) {
@@ -57,21 +56,15 @@ App.Views.ContactView = Backbone.View.extend({
   },
   hide: function() {
     this.$el.removeClass('show');
-  },
-  noBubble: function(e) {
-    e.stopPropagation();
+    this.closing = true;
   },
   close: function() {
-    if(this.isOpen) {
-      var _this = this;
+    var close = App.dirCheck(e.originalEvent.propertyName);
 
+    if(this.closing && close) {
       App.menuClickable = true;
-      this.$el.fadeOut(500, function() {
-        App.kill(_this);
-        App.router.navigate('');
-      });
+      App.kill(this, '', 1);
     }
-    this.isOpen = true;
   },
   success: function() {
     var _this = this;
@@ -82,8 +75,8 @@ App.Views.ContactView = Backbone.View.extend({
       $('.success').addClass('animate');
 
       setTimeout(function() {
-        _this.close();
-        App.router.navigate('');
+        App.menuClickable = true;
+        App.kill(_this, '');
       }, 2500);
     }, 0);
   }

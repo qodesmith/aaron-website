@@ -20,15 +20,20 @@ App = {
   },
 
   // Prevent Backbone zombie views from forming: http://goo.gl/OJEqsr
-  kill: function(view, route) {
+  kill: function(view, route, time) {
     if(!view) return;
     if(view.typer) document.body.dispatchEvent(new CustomEvent('killTyper'));
     if(view === App.demoView) App.demoView = '';
     if(view === App.currentView) App.currentView = '';
+    if(route !== undefined) this.router.navigate(route);
 
-    view.undelegateEvents(); // Unbind the view's delegated events.
-    view.$el.fadeOut(250, function() {
-      view.remove(); // Remove the view from the DOM.
+    view.$el.fadeOut(time || 250, function() {
+      view.remove(); // Remove the view from the DOM. Will also undelegate events.
+    });
+  },
+  dirCheck: function(property) {
+    return ['top', 'bottom', 'left', 'right'].some(function(dir) {
+      return property === dir;
     });
   }
 };

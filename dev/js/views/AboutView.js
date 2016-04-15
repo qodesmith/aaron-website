@@ -2,7 +2,6 @@ App.Views.AboutView = Backbone.View.extend({
   id: 'about-page',
   className: 'page full-size sans',
   initialize: function() {
-    // this.template = Handlebars.compile($('#about-template').html());
     App.router.navigate('about');
     this.typer = true;
     this.html = App.templates.AboutPageView();
@@ -23,26 +22,22 @@ App.Views.AboutView = Backbone.View.extend({
     }, 10);
   },
   events: {
-    'transitionend *': 'noBubble',
     'transitionend': 'close',
     'click .close': 'hide'
-  },
-  noBubble: function(e) {
-    e.stopPropagation();
   },
   hide: function() {
     document.body.dispatchEvent(new CustomEvent('killTyper'));
     bgImageGallery('stop');
     this.$el.removeClass('show');
+    this.closing = true;
   },
   close: function(e) {
-    if(this.isOpen) { // Rejects the opening transition.
-      App.menuClickable = true;
-      App.kill(this);
-      App.router.navigate('');
-    }
+    var close = App.dirCheck(e.originalEvent.propertyName);
 
-    this.isOpen = true;
+    if(this.closing && close) {
+      App.menuClickable = true;
+      App.kill(this, '', 1);
+    }
   },
   photoSlide: function() {
     // Array found in 'demos/photoArrays.js'

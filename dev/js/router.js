@@ -80,6 +80,8 @@ App.Router = Backbone.Router.extend({
     App.kill(App.demoView);
     App.kill(App.currentView);
 
+    App.menuClickable = true;
+
     // Render the homepage.
     if(!App.homePage) App.homePage = new App.Views.HomeView();
   },

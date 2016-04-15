@@ -3,6 +3,7 @@ function bgImageGallery(array, selector1, selector2) {
   if(array === 'stop') {
     clearInterval(window.bgInterval);
     clearTimeout(window.bgTimeout);
+    console.log('bg gallery image stopped!');
     return;
   }
 

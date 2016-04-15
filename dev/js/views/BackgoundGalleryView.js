@@ -3,7 +3,6 @@ App.Views.BackgroundGalleryView = Backbone.View.extend({
   className: 'full-size',
   initialize: function() {
     App.router.navigate('projects/background-gallery');
-    this.transitions = 0;
     this.html = App.templates.BackgroundGalleryView();
     this.render();
   },
@@ -24,23 +23,18 @@ App.Views.BackgroundGalleryView = Backbone.View.extend({
     }, 10);
   },
   events: {
-    'click .close': 'close',
-    'transitionend *': 'noBubble',
-    'transitionend': 'removeMe'
+    'click .close': 'close'
   },
-  close: function() {
+  close: function(e) {
+    var _this = this;
+    App.menuClickable = true;
+
     this.$el.removeClass('show');
-  },
-  noBubble: function(e) {
-    e.stopPropagation();
-  },
-  removeMe: function() {
-    if(this.transitions === 1) {
-      bgImageGallery('stop');
-      App.kill(this);
-      App.router.navigate('projects');
-    }
-    this.transitions++;
+    bgImageGallery('stop');
+
+    setTimeout(function() {
+      App.kill(_this, 'projects', 1);
+    }, 1000);
   },
   startGallery: function() {
     // Array found in 'demos/photoArrays.js'

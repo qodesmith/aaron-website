@@ -26,28 +26,23 @@ App.Views.ProjectsView = Backbone.View.extend({
     }, 10);
   },
   events: {
-    'transitionend *': 'noBubble',
     'transitionend': 'close',
     'click .close': 'hide',
     'click .demo': 'demoLaunch',
     'mouseover .demo': 'demoMouseOver',
     'mouseout .demo': 'demoMoveOut'
   },
-  noBubble: function(e) {
-    e.stopPropagation();
-  },
   hide: function() {
     this.$el.removeClass('show');
+    this.closing = true;
   },
   close: function(e) {
-    if(this.isOpen) { // Rejects the opening transition.
-      App.projectsRendered = false;
-      App.menuClickable = true;
-      App.kill(this);
-      App.router.navigate('');
-    }
+    var close = App.dirCheck(e.originalEvent.propertyName);
 
-    this.isOpen = true;
+    if(this.closing && close) {
+      App.menuClickable = true;
+      App.kill(this, '', 1);
+    }
   },
   demoLaunch: function(e) {
     var demo = $(e.currentTarget).data('demo');

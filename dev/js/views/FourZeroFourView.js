@@ -2,9 +2,9 @@ App.Views.FourZeroFourView = Backbone.View.extend({
   id: 'four-zero-four',
   className: 'full-size flex-centered',
   initialize: function() {
-    var num = Math.floor(Math.random() * 3);
+    var num = Math.floor(Math.random() * App.f0f.length);
     var content = $('<div class="content">');
-    var home = $('<a class="home">home page</a>');
+    var home = $('<a class="home">HOME PAGE</a>');
 
     this.typer = true;
     this.$el.append(home);
@@ -14,7 +14,8 @@ App.Views.FourZeroFourView = Backbone.View.extend({
     $('body').append(this.$el);
 
     setTimeout(function() {
-      type404(num, '.content');
+      // Found in type404.js
+      App.f0f[num]();
     }, 1000);
   },
   events: {
@@ -22,8 +23,7 @@ App.Views.FourZeroFourView = Backbone.View.extend({
   },
   goHome: function(e) {
     e.preventDefault;
-    App.kill(this);
+    App.kill(this, '');
     App.homePage = new App.Views.HomeView();
-    App.router.navigate('');
   }
 });

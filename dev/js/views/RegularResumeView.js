@@ -17,27 +17,23 @@ App.Views.RegularResumeView = Backbone.View.extend({
     }, 10);
   },
   events: {
-    'transitionend *': 'noBubble',
     'transitionend': 'close',
     'click .close': 'hide',
     'mouseover .pdf': 'pdf',
     'mouseout .pdf': 'pdf',
     'click .pdf': 'pdf'
   },
-  noBubble: function(e) {
-    e.stopPropagation();
-  },
   hide: function() {
     this.$el.removeClass('show');
+    this.closing = true;
   },
-  close: function() {
-    if(this.isOpen) { // Rejects the opening transition.
-      App.menuClickable = true;
-      App.kill(this);
-      App.router.navigate('');
-    }
+  close: function(e) {
+    var close = App.dirCheck(e.originalEvent.propertyName);
 
-    this.isOpen = true;
+    if(this.closing && close) {
+      App.menuClickable = true;
+      App.kill(this, '', 1);
+    }
   },
   pdf: function(e) {
     if(e.type === 'click') {

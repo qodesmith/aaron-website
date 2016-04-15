@@ -38,29 +38,24 @@ App.Views.AwesomeResumeView = Backbone.View.extend({
     }, 10);
   },
   events: {
-    'transitionend *': 'noBubble',
     'transitionend': 'close',
     'click .close': 'hide',
     'click #switch-theme': 'switchTheme'
   },
-  noBubble: function(e) {
-    e.stopPropagation();
-  },
   hide: function() {
     // Remove the event listeners associated with thingToHTML.
-    var killThings = new CustomEvent('killThings');
-    document.body.dispatchEvent(killThings);
+    document.body.dispatchEvent(new CustomEvent('killThings'));
 
     this.$el.removeClass('show');
+    this.closing = true;
   },
-  close: function() {
-    if(this.isOpen) { // Rejects the opening transition.
-      App.menuClickable = true;
-      App.kill(this);
-      App.router.navigate('');
-    }
+  close: function(e) {
+    var close = App.dirCheck(e.originalEvent.propertyName);
 
-    this.isOpen = true;
+    if(this.closing && close) {
+      App.menuClickable = true;
+      App.kill(this, '', 1);
+    }
   },
   switchTheme: function() {
     $('.close').toggleClass('dark light');

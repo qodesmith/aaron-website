@@ -4,7 +4,7 @@
   position: relative;
   font-size: 1.3em;
   overflow-y: scroll;
-  padding: 50px 10px 0;
+  padding: 50px 0 0;
 
   &:before {
     content: '404';
@@ -16,18 +16,17 @@
   }
 
   .home {
-    padding: 10px;
+    padding: 30px 30px 20px;
     position: absolute;
     top: 0;
     z-index: 1;
-    border-radius: 5px;
     font-size: 16px;
-    border: 1px solid transparent;
-    background: rgba(255,255,255,.25);
-    margin: 10px 0 0;
+    background: linear-gradient(to top left, rgba(255,255,255,.3), rgba(255,255,255,.1), transparent);
+    cursor: pointer;
+    user-select: none;
 
-    &:hover {
-      border: 1px solid currentColor;
+    &.highlight {
+      background: #f0f;
     }
   }
 
@@ -49,6 +48,10 @@
     div:last-of-type {
       border-bottom: none;
     }
+  }
+
+  .apparently {
+    text-align: center;
   }
 
   @media screen and (max-width: @mobile) {

@@ -3,7 +3,6 @@ App.Views.DeckGridView = Backbone.View.extend({
   className: 'full-size',
   initialize: function() {
     App.router.navigate('projects/deck-grid');
-    this.transitions = 0;
     this.html = App.templates.DeckGridView();
     this.render();
   },
@@ -27,22 +26,17 @@ App.Views.DeckGridView = Backbone.View.extend({
   },
   events: {
     'click .close': 'close',
-    'transitionend *': 'noBubble',
-    'transitionend': 'removeMe'
   },
   close: function() {
+    var _this = this;
+    App.menuClickable = true;
+
     this.removeDeckListeners();
     this.$el.removeClass('show');
-  },
-  noBubble: function(e) {
-    e.stopPropagation();
-  },
-  removeMe: function() {
-    if(this.transitions === 1){
-      App.kill(this);
-      App.router.navigate('projects');
-    }
-    this.transitions++;
+
+    setTimeout(function() {
+      App.kill(_this, 'projects', 1);
+    }, 1000);
   },
   removeDeckListeners: function() {
     for(var i in this.tracker.listeners) {

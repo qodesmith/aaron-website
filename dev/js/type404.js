@@ -1,6 +1,8 @@
-function type404(num, target) {
-  if(num === 0) {
-    typer(target)
+// Various 404 messages using Typer.
+App.f0f = [
+  // Abyss.
+  (function() {
+    typer('.content')
       .run(function(el) {
         $(el).addClass('abyss');
       })
@@ -38,8 +40,11 @@ function type404(num, target) {
       .pause(3000)
       .line()
       .line('What were we doing again?');
-  } else if(num === 1) {
-    typer(target)
+  }),
+
+  // Kalam.
+  (function() {
+    typer('.content')
       .run(function(el) {
         $(el).addClass('kalam');
         $(el).parent().prepend($('<h1>The Kalam Cosmological Argument</h1>'));
@@ -50,15 +55,39 @@ function type404(num, target) {
       .line('The universe began to exist.')
       .pause(750)
       .line('Therefore, the universe <span style="color: lightgreen">has a cause.</span>')
-  } else if(num === 2) {
+  }),
+
+  // Apparently.
+  (function() {
     var host = window.location.hostname;
     var path = window.location.pathname;
-
-    typer(target)
+    typer('.content', 40)
       .cursor({block: true})
       .run(function(el) {
         $(el).addClass('apparently');
       })
-      .line('Apparently, ' + host + '<span style="color: yellow">' + path + "</span> isn't a thing.")
-  }
-}
+      .line('Apparently,')
+      .pause()
+      .line(host + '<span style="color: yellow">' + path)
+      .line("isn't a thing.")
+      .pause(6000)
+      .line()
+      .line('I believe that means you should enter a new url.')
+      .pause(5000)
+      .line('How bout you just click the "HOME PAGE" button up top?')
+      .run(function() {
+        var times = 0;
+        App.homeHighlight = setInterval(function() {
+          console.log('toggle');
+          if(times === 6) {
+            clearInterval(App.homeHighlight);
+            delete App.homeHighlight;
+            return;
+          }
+
+          $('.home').toggleClass('highlight');
+          times++;
+        }, 500);
+      });
+  })
+];
