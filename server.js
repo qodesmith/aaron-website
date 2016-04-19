@@ -1,14 +1,16 @@
-var dotenv  = require('dotenv').load();
-var express = require('express');
-var bp      = require('body-parser');
-var path    = require('path');
-var mailgun = require('mailgun-js')({
+var dotenv      = require('dotenv').load();
+var express     = require('express');
+var bp          = require('body-parser');
+var compression = require('compression');
+var path        = require('path');
+var mailgun     = require('mailgun-js')({
   apiKey: process.env.mailgun_api_key,
   domain: process.env.mailgun_domain
 });
 
 var app = express();
 
+app.use(compression()); // http://goo.gl/uCh33Z
 app.use(bp.urlencoded({extended: false}));
 app.use(express.static(path.join(__dirname, 'public')));
 
