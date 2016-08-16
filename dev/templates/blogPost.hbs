@@ -1,0 +1,18 @@
+<div class="post-container flex col">
+  <header class="flex col">
+    <h1 class="title">{{title}}</h1>
+    <div class="date">
+      {{#if updatedAt}}
+        <span class="updated">Updated:&nbsp;</span>{{date updatedAt}}
+      {{else}}
+        {{date createdAt}}
+      {{/if}}
+    </div>
+    {{#if tags.length}}
+    {{/if}}
+  </header>
+  <div class="tags">tags: [ {{{tagList tags}}} ]</div>
+  <div class="content">
+    {{{content}}}
+  </div>
+</div>

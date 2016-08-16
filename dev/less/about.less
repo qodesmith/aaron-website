@@ -1,0 +1,161 @@
+#about {
+  background: fadeout(@code-gray, 20%);
+
+  header {
+    background: url(/images/backgrounds/diamond-crossover.jpg) center center no-repeat;
+    background-size: cover;
+    padding: 0 2vmin;
+    .relative;
+
+    @media (min-width: @desktop) {
+      padding: 0 4vmin;
+    }
+
+    &:before {
+      content: '';
+      background: radial-gradient(
+          rgba(0,0,0,0.3),
+          rgba(0,0,0,0.3),
+          rgba(0,0,0,.8)
+        );
+      .absolute;
+      .full-size;
+      .top;
+      .left;
+    }
+
+    h1 {
+      font-size: 8rem;
+      text-shadow: 1vmin 1vmin 1.5vmin black;
+
+      @media (max-width: @mobile) {
+        font-size: 3rem;
+      }
+    }
+  }
+
+  .angle-down {
+    width: 100vw;
+    text-align: center;
+    font-size: 10vmin;
+    opacity: 1;
+    transition: opacity .3s;
+    animation: bob 1.5s infinite;
+
+    &.hide {
+      opacity: 0;
+    }
+
+    span {
+      display: inline-block;
+      line-height: 1;
+      transform: rotate(90deg);
+    }
+  }
+
+  .about-content {
+    h1 {
+      margin-bottom: 15px;
+    }
+
+    p:first-of-type {
+      margin-top: 0;
+    }
+  }
+
+  #tldr {
+    @media (max-width: @mobile) {
+      font-size:;
+    }
+  }
+
+  .tldr {
+    font-size: 2.5em;
+    margin: auto .5ex auto 0;
+  }
+
+  .tldr-description {
+    text-align: right;
+  }
+
+  .up {
+    transform: rotate(-90deg) translateX(15%);
+  }
+
+  .down {
+    transform: rotate(-90deg) translateX(-50%);
+  }
+
+  .function {
+    background: linear-gradient(to right, transparent, rgba(255,255,255,.025), transparent);
+    padding: 1em 0;
+    margin-bottom: 1em;
+
+    @media (max-width: @mobile) {
+      @media (orientation: portrait) {
+        font-size: .65em;
+      }
+    }
+  }
+
+  .function-container {
+    display: inline-block;
+    text-align: left;
+  }
+
+  .me {
+    width: 40vmin;
+    height: 40vmin;
+    margin: 0 0 10px 10px;
+    float: right;
+    display: block;
+    z-index: 1;
+    .relative;
+
+    @media (max-width: @mobile) {
+      float: none;
+      margin: 0 0 10px;
+      width: initial;
+      height: 100vmin;
+
+      @media (orientation: landscape) {
+        height: 100vh;
+      }
+    }
+  }
+
+  .about-me {
+    padding: 0 10%;
+
+    @media (max-width: @mobile) {
+      padding: 0 10px;
+    }
+  }
+
+  .broke {
+    display: block;
+    margin-top: .5ex;
+    font-size: .7rem;
+    .sans;
+  }
+
+  .skillset {
+    div {
+      display: inline-block;
+    }
+  }
+
+  @keyframes bob {
+    0% {
+      transform: translateY(0%);
+    }
+
+    50% {
+      transform: translateY(8%);
+    }
+
+    100% {
+      transform: translateY(0%);
+    }
+  }
+}

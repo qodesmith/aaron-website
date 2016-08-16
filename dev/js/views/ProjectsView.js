@@ -1,62 +1,60 @@
-
-App.Views.ProjectsView = Backbone.View.extend({
-  id: 'projects-page',
-  className: 'page full-size center',
+app.ProjectsView = Backbone.View.extend({
+  id: 'projects',
+  className: 'page overflow x flex',
   initialize: function() {
-    App.router.navigate('projects');
-    this.projects = true;
-    this.html = App.templates.ProjectsPageView();
-    this.render();
-  },
-  render: function() {
     var _this = this;
 
-    App.randomDir(this.$el);
+    router.navigate('projects');
+    this.name = 'ProjectsView';
 
-    this.$el.html(this.html);
-    $('body').append(this.$el);
-
-    // Apply first and last classes to the first and last projects.
-    var projects = this.$el.find('.project');
-    $(projects[0]).addClass('first');
-    $(projects[projects.length - 1]).addClass('last');
-
-    setTimeout(function() {
-      _this.$el.addClass('show');
-    }, 10);
+    this.$el.html(templates.projects(projectData));
+    app.typicalRender(this);
   },
   events: {
-    'transitionend': 'close',
-    'click .close': 'hide',
-    'click .demo': 'demoLaunch',
-    'mouseover .demo': 'demoMouseOver',
-    'mouseout .demo': 'demoMoveOut'
+    // wheel: 'wheel',
+    // mousemove: 'mousemove',
+    'click [data-view]': 'demo'
   },
-  hide: function() {
-    this.$el.removeClass('show');
-    this.closing = true;
+  wheel: function(e) {
+    // Prevents scrolling with the mouse wheel or trackpad swipes.
+    e.preventDefault();
   },
-  close: function(e) {
-    var close = App.dirCheck(e.originalEvent.propertyName);
+  mousemove: function(e) {
+    if (app.breakPoint() !== 'DESKTOP') return;
 
-    if(this.closing && close) {
-      App.menuClickable = true;
-      App.kill(this, '', 1);
-    }
-  },
-  demoLaunch: function(e) {
-    var demo = $(e.currentTarget).data('demo');
+    // 1. Calculate the width of the page.
+    var windowWidth = window.innerWidth;
 
-    if(demo) {
-      e.preventDefault();
-      if(App.demoView) return console.log('Demo view already open');
-      App.demoView = new App.Views[demo + 'View']();
-    }
+    // 2. Calculate the metrics of the scroll-triggering area
+    // (buffered by a percentage on no-scrolling area on either side).
+    var buffer = windowWidth * .2;
+    var start = buffer;
+    var end = windowWidth - buffer;
+    var spread = end - start;
+
+    // 3. Calculate the %age of the mouse location to the left of the buffered zone.
+    var mouseLoc = e.clientX;
+    var percentage = (function() {
+      if (mouseLoc < start) {
+        return 0;
+      } else if (mouseLoc > end) {
+        return 1;
+      } else {
+        return (mouseLoc - buffer) / spread;
+      }
+    })();
+
+    // 4. Calculate the el's scroll amount.
+    var elScrollWidth = this.el.scrollWidth; // How wide the element is.
+    var maxScroll = elScrollWidth - windowWidth; // Maximum scrollLeft amount.
+
+    // 5. Scroll the el accordingly.
+    this.el.scrollLeft = maxScroll * percentage;
   },
-  demoMouseOver: function(e) {
-    $(e.target).closest('.demo').addClass('transform');
-  },
-  demoMoveOut: function(e) {
-    $(e.target).closest('.demo').removeClass('transform');
+  demo: function(e) {
+    var view = $(e.currentTarget).data('view');
+
+    views.currentView.remove();
+    views.currentView = new app[view]();
   }
 });

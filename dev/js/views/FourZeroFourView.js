@@ -1,29 +1,21 @@
-App.Views.FourZeroFourView = Backbone.View.extend({
+app.FourZeroFourView = Backbone.View.extend({
   id: 'four-zero-four',
-  className: 'full-size flex-centered',
+  className: 'absolute top left full-size flex col centered mono overflow y',
   initialize: function() {
-    var num = Math.floor(Math.random() * App.f0f.length);
-    var content = $('<div class="content">');
-    var home = $('<a class="home">HOME PAGE</a>');
+    var num = app.randomNum(0, f0f.length - 1);
+    var $home = $('<a href="/">HOME PAGE</a>');
+    var $content = $('<div class="content sans">');
 
     this.typer = true;
-    this.$el.append(home);
-    this.$el.append(content);
+    this.$el.append($home);
+    this.$el.append($content);
 
-    $('#container').remove();
-    $('body').append(this.$el);
+    $home.addClass('home absolute top left pointer');
+    $body.append(this.$el);
 
     setTimeout(function() {
       // Found in type404.js
-      App.f0f[num]();
+      f0f[num]();
     }, 1000);
-  },
-  events: {
-    'click a': 'goHome'
-  },
-  goHome: function(e) {
-    e.preventDefault;
-    App.kill(this, '');
-    App.homePage = new App.Views.HomeView();
   }
 });

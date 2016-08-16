@@ -1,0 +1,163 @@
+#blog {
+  background: url(/images/backgrounds/mic-booth.jpg) center center;
+  background-size: cover;
+  align-items: center;
+
+  .tag-title {
+    background: rgba(127,127,127,.5);
+    padding: 10px 15px;
+    text-shadow: 2px 2px 5px rgba(0,0,0,.6);
+
+    @media (max-width: @mobile) {
+      top: initial;
+      bottom: 0;
+      width: 100vw;
+      height: @hamburger-size;
+      .flex;
+      .centered;
+    }
+  }
+
+  .posts-container {
+    flex-shrink: 0;
+    margin-top: 30px;
+    opacity: 0;
+    transition: opacity .5s;
+
+    &.show {
+      opacity: 1;
+    }
+
+    @media (max-width: @mobile) {
+      align-items: center;
+    }
+  }
+
+  .posts-button {
+    background: rgba(0,0,0,.6);
+    box-sizing: content-box;
+    padding: 10px 15px;
+    margin: 30px 0;
+    transition: color .25s;
+    font-weight: 600;
+    border: 1px solid rgba(127,127,127,.5);
+    user-select: none;
+    text-transform: uppercase;
+    .pointer;
+
+    &:hover {
+      color: @link-hover;
+    }
+
+    &.error {
+      border: 1px solid red;
+    }
+
+    &.end {
+      color: rgba(127,127,127,.5);
+      cursor: not-allowed;
+    }
+  }
+
+  h1 {
+    margin: 0;
+  }
+
+  .post-title {
+    font-family: 'Bebas';
+    font-size: 4rem;
+    margin-bottom: 25px;
+    position: relative;
+    display: inline-table;
+
+    @media (max-width: @mobile) {
+      font-size: 2.5rem;
+      text-align: center;
+    }
+
+    &:last-of-type {
+      margin: 0;
+    }
+
+    &:hover {
+      .invisible {
+        &:nth-of-type(1) {
+          &:before {
+            opacity: 1;
+            top: -5px;
+            left: -5px;
+          }
+
+          &:after {
+            opacity: 1;
+            top: -5px;
+            right: -5px;
+          }
+        }
+
+        &:nth-of-type(2) {
+          &:before {
+            opacity: 1;
+            bottom: -5px;
+            left: -5px;
+          }
+
+          &:after {
+            opacity: 1;
+            bottom: -5px;
+            right: -5px;
+          }
+        }
+      }
+    }
+
+    a {
+      background: rgba(0,0,0,.6);
+      padding: 0 10px;
+      text-decoration: none;
+      .relative;
+    }
+
+    .invisible:before,
+    .invisible:after {
+      content: '';
+      width: 15px;
+      height: 15px;
+      opacity: 0;
+      transition: opacity .5s, top .5s, bottom .5s, left .5s, right .5s;
+      position: absolute;
+    }
+
+    .invisible:nth-of-type(1) {
+      &:before {
+        border-top: 1px solid white;
+        border-left: 1px solid white;
+        top: -15px;
+        left: -15px;
+      }
+
+      &:after {
+        border-top: 1px solid white;
+        border-right: 1px solid white;
+        top: -15px;
+        right: -15px;
+      }
+    }
+
+    .invisible:nth-of-type(2) {
+      &:before {
+        border-bottom: 1px solid white;
+        border-left: 1px solid white;
+        bottom: -15px;
+        left: -15px;
+      }
+
+      &:after {
+        border-bottom: 1px solid white;
+        border-right: 1px solid white;
+        bottom: -15px;
+        right: -15px;
+      }
+    }
+  }
+}

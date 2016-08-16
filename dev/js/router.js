@@ -1,143 +1,203 @@
-App.Router = Backbone.Router.extend({
+app.Router = Backbone.Router.extend({
+
+  // Adding the '(/)' allows for trailing slashes in the url.
   routes: {
     // MAIN ROUTES
     '': 'index',
-    'about': 'about',
-    'projects': 'projects',
-    'regular-resume': 'regularResume',
-    'nerdy-resume': 'nerdyResume',
-    'contact': 'contact',
+    'about(/)': 'about',
+    'projects(/)': 'projects',
+    'blog(/)': 'blog',
+    'contact(/)': 'contact',
 
-    // SINGLE-PROJECT ROUTES
-    'projects/:id': 'projects',
+    // DEMO ROUTES
+    'typer(/)': 'typerDemo',
+    'thing-to-html(/)': 'thingDemo',
+    'time-calculator(/)': 'calcDemo',
+    'deck-grid(/)': 'deckDemo',
+    'background-gallery(/)': 'bgDemo',
+
+    // DYNAMIC ROUTES
+    'blog/:tag/:tagName(/)': 'blog',
+    'blog/:id(/)': 'blog',
+
+    // OTHER ROUTES
+    'edit-post(/)': 'editPost',
+    'create-post(/)': 'createPost',
+    'login(/)': 'login',
 
     // 404 ROUTE
     '*404': 'fourZeroFour'
   },
+  removeCurrentView: function(original) {
+    var view = views.currentView;
 
-  // HELPER FUNCTIONS
-  checkHomePage: function() {
-    // Exit if homepage is already rendered.
-    if(App.homePage) return;
+    if (view) {
 
-    // This will cause the homepage view to render without typing.
-    App.homeRendered = true;
-
-    // Render the homepage.
-    App.homePage = new App.Views.HomeView();
-  },
-  createView: function(name, project) {
-    App.menuClickable = false;
-
-    // Kill any open demo view.
-    if(App.demoView) {
-      App.kill(App.demoView);
-      App.demoView = '';
-    }
-
-    // CREATE A DEMO VIEW
-    if(project) {
-      // If NO view is open, create ProjectsView.
-      if(!App.currentView) {
-        App.currentView = new App.Views.ProjectsView();
-
-      // Kill any open regular view EXCEPT ProjectsView, create ProjectsView.
-      } else if(!App.currentView.projects) {
-        var view = App.currentView;
-        view.$el.fadeOut(250, function() { App.kill(view) });
-
-        App.currentView = new App.Views.ProjectsView();
+      // Stop the mutation observer on the blog's 'load more' button.
+      if (view.blog) {
+        view.buttonObserver.disconnect();
+        delete view.buttonObserver;
       }
 
-      // Create the single project view.
-      App.demoView = new App.Views[name]();
+      // Reset the `taggedPosts` collection,
+      // forcing it to reload queried posts each time.
+      if (view.tagBlog) {
+        taggedPosts.reset();
+      }
 
-    // ALL OTHER VIEWS
+      // For any view with a typer on it.
+      if (view.typer) {
+        document.body.dispatchEvent(new Event('killTyper'));
+      }
+
+      // For the thingToHTML demo.
+      if (view.thing) {
+        document.body.dispatchEvent(new Event('killThingExample'));
+      }
+
+      if (view.calculator) {
+        document.body.dispatchEvent(new Event('killTimeCalc'));
+      }
+
+      // For the deckGrid demo.
+      if (view.deck) {
+        document.body.dispatchEvent(new Event('killDeckGrid'));
+      }
+
+      // For the bgGallery demo.
+      if (view.gallery) {
+        document.body.dispatchEvent(new Event('killGallery'));
+      }
+
+      view.remove(original);
+    }
+  },
+  navAndView: function(view, data) {
+    // `data`:
+    // {model: model}
+    // {tag: tag}
+
+    this.removeCurrentView();
+
+    if (!views.NavigationView) {
+      views.NavigationView = new app.NavigationView(view, data);
     } else {
-      // Avoid re-creating ProjectsView.
-      try {
-        if(App.currentView.projects) {
-          console.log('Refusing to re-create ProjectsView');
-          return;
-        }
-      } catch(err) {
-        console.log('No ProjectsView to re-create. Creating...');
-      }
-
-      // Kill the open view.
-      App.kill(App.currentView);
-
-      // Create new view.
-      App.currentView = new App.Views[name]();
+      views.currentView = new app[view](data);
     }
   },
+
+  // Route functions are only triggered by browser actions,
+  // not manual `.navigate` calls. Back & fwd buttons are triggers.
 
   // MAIN ROUTES
   index: function() {
-    console.log('index route');
+    this.removeCurrentView();
+    views.currentView = null;
 
-    // Kill all open views.
-    App.kill(App.demoView);
-    App.kill(App.currentView);
-
-    App.menuClickable = true;
-
-    // Render the homepage.
-    if(!App.homePage) App.homePage = new App.Views.HomeView();
+    if (!views.HomeView) {
+      views.HomeView = new app.HomeView();
+    } else {
+      views.HomeView.render();
+    }
   },
   about: function() {
-    console.log('about route');
-    this.checkHomePage();
-    this.createView('AboutView');
+    this.navAndView('AboutView');
   },
-  projects: function(id) {
-    // Single-project routes.
-    if(id) {
-      console.log('projects/' + id + ' route');
-      var project;
-      var route;
-      ['typer', 'time-calculator', 'deck-grid', 'background-gallery'].some(function(name) {
-        if(id === name) {
-          route = name;
-          if(id === 'typer')              project = 'TyperDemoView';
-          if(id === 'time-calculator')    project = 'TimeCalcView';
-          if(id === 'deck-grid')          project = 'DeckGridView';
-          if(id === 'background-gallery') project = 'BackgroundGalleryView';
-        }
-      });
+  projects: function() {
+    this.navAndView('ProjectsView');
+  },
+  blog: function(id, tag) {
+    var _this = this;
+    var model;
 
-      if(project) {
-        this.checkHomePage();
-        return this.createView(project, true);
+    // TAGGED POSTS PAGE
+    if (tag) {
+      this.navAndView('BlogView', {tag: tag});
+
+    // SINGLE-POST PAGE
+    } else if (id) {
+
+      // If the post is in the collection...
+      if (posts.where({_id: id}).length) {
+        model = posts.where({_id: id})[0];
+        this.navAndView('BlogPostView', {model: model});
+
+      // If the post is *not* in the collection...
+      } else {
+        $.get('/blog-posts?id=' + id)
+          .done(function(post) {
+
+            // If for some reason the post isn't in the db, log an error.
+            if (post.length !== 1) {
+              $.post('/error-logs', {
+                error: 'Single post *not* in collection, also not returned from db'
+              });
+
+              return _this.fourZeroFour();
+            }
+
+            model = new app.PostModel(post[0]);
+            _this.navAndView('BlogPostView', {model: model});
+          })
+          .fail(function(res) {
+            _this.fourZeroFour();
+            $.post('/error-logs', {
+              responseText: res.responseText,
+              statusText: res.statusText,
+              status: res.status
+            });
+          });
       }
 
-      return this.fourZeroFour();
+    // BLOG PAGE
+    } else {
+      this.navAndView('BlogView');
     }
-
-    // Projects route.
-    console.log('projects route');
-    this.checkHomePage();
-    this.createView('ProjectsView');
-  },
-  regularResume: function() {
-    console.log('regular route');
-    this.checkHomePage();
-    this.createView('RegularResumeView');
-  },
-  nerdyResume: function() {
-    console.log('nerdy route');
-    this.checkHomePage();
-    this.createView('AwesomeResumeView');
   },
   contact: function() {
-    console.log('contact route');
-    this.checkHomePage();
-    this.createView('ContactView');
+    this.navAndView('ContactView');
+  },
+
+  // PROJECT DEMO ROUTES
+  typerDemo: function() {
+    this.navAndView('TyperDemoView');
+  },
+  thingDemo: function() {
+    this.navAndView('ThingDemoView');
+  },
+  calcDemo: function() {
+    this.navAndView('TimeCalcDemoView');
+  },
+  deckDemo: function() {
+    this.navAndView('DeckGridDemoView');
+  },
+  bgDemo: function() {
+    this.navAndView('BGGalleryDemoView');
+  },
+
+  // OTHER ROUTES
+  editPost: function() {
+    this.removeCurrentView(true);
+    views.currentView = new app.AdminPostView('edit');
+  },
+  createPost: function() {
+    this.removeCurrentView(true);
+    views.currentView = new app.AdminPostView('create');
+  },
+  login: function() {
+    this.removeCurrentView(true);
+    views.currentView = new app.LoginView();
   },
 
   // 404
   fourZeroFour: function() {
-    console.log('404 route');
-    App.currentView = new App.Views.FourZeroFourView();
+    if (views.HomeView) views.HomeView.remove(true);
+    if (views.NavigationView) views.NavigationView.remove(true);
+
+    views.HomeView = null;
+    views.NavigationView = null;
+
+    this.removeCurrentView(true);
+    views.currentView = new app.FourZeroFourView();
   }
 });

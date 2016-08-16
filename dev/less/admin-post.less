@@ -1,0 +1,103 @@
+#admin-post {
+  padding: 20px;
+
+  &.create {
+    .input {
+      margin-bottom: 25px;
+      width: 100%;
+    }
+  }
+
+  .face {
+    font-size: 17vmin;
+  }
+
+  .editor {
+    flex-basis: 70%;
+    padding-right: 20px;
+
+    .input {
+      width: 100%;
+      margin-bottom: 20px
+    }
+  }
+
+  .posts {
+    flex-basis: 30%;
+  }
+
+  .posts-list {
+    margin-top: 10px;
+  }
+
+  .input {
+    display: block;
+    background: @code-gray;
+    color: @off-white;
+    border: 1px solid @off-white;
+    font-size: 1rem;
+    padding: 1ex;
+    .sans;
+  }
+
+  textarea {
+    flex-grow: 1;
+  }
+
+  .search {
+    flex-shrink: 0;
+  }
+
+  .post {
+    user-select: none;
+    margin-bottom: 10px;
+    display: none;
+
+    &.show {
+      display: block;
+    }
+  }
+
+  .modal {
+    background: fadeout(darken(@code-gray, 5%), 10%);
+  }
+
+  .buttons {
+    margin-top: 10px;
+  }
+
+  .button {
+    border: 1px solid;
+    margin: 10px;
+    padding: .5ex 1ex;
+    user-select: none;
+    transition: background .3s;
+    .pointer;
+
+    &:hover {
+      background: rgba(255,255,255,.2);
+    }
+
+    &.save,
+    &.delete {
+      margin: 0 0 0 1ex;
+      display: inline-block;
+    }
+
+    &.save {
+      margin: 0;
+    }
+  }
+
+  .errors {
+    display: inline-block;
+    margin-left: 1ex;
+    font-size: .8em;
+    color: gray;
+
+    &.message {
+      color: red;
+      font-weight: bold;
+    }
+  }
+}

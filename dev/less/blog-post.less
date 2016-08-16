@@ -1,0 +1,66 @@
+#blog-post {
+  @background: rgba(0,0,0,.85);
+  @padding-desktop: 0 10% 1em;
+  @padding-mobile: 0 15px 1em;
+
+  background-position: center center;
+  background-size: cover;
+  color: @off-white;
+  padding: 0;
+
+  header {
+    height: 100vh;
+    padding: @padding-desktop;
+    justify-content: flex-end;
+    background: linear-gradient(to bottom, transparent, transparent, @background);
+
+    @media (max-width: @mobile) {
+      padding: @padding-mobile;
+    }
+  }
+
+  .title {
+    text-shadow: .1ex .1ex .25ex black, .1ex .1ex .5ex black;
+    margin: 0;
+  }
+
+  .date {
+    font-style: italic;
+    text-shadow: .2ex .2ex .5ex black, .2ex .2ex 1ex black;
+    margin-bottom: 2em;
+    font-size: .7em;
+
+    .updated {
+      font-style: none;
+    }
+  }
+
+  .tags {
+    font-family: 'Droid Mono';
+    font-size: .8em;
+    background: @background;
+    padding: @padding-desktop;
+
+    @media (max-width: @mobile) {
+      padding: @padding-mobile;
+    }
+
+    a {
+      font-weight: bold;
+    }
+  }
+
+  .content {
+    padding: @padding-desktop;
+    background: @background;
+
+    @media (max-width: @mobile) {
+      padding: @padding-mobile;
+      padding-bottom: @hamburger-size;
+    }
+
+    > p {
+      margin-top: 0;
+    }
+  }
+}

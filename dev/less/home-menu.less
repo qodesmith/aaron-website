@@ -1,0 +1,107 @@
+#menu {
+  transition: height .5s, opacity .5s;
+  opacity: 1;
+  .relative;
+
+  // Slides the header elements l & r and
+  // triggers the expolsion on the `.wrapify` elements.
+  &.blow-up {
+    #name {
+      transform: translateX(100vw);
+    }
+
+    #title {
+      transform: translateX(-100vw);
+    }
+
+    .wrapify {
+      top: 100vh;
+    }
+  }
+
+  &.disappear {
+    opacity: 0;
+  }
+}
+
+#menu-heading {
+  opacity: 0;
+  transition: opacity 3s;
+  margin-bottom: 12vmin;
+
+  &.show {
+    opacity: 1;
+  }
+
+  #name,
+  #title {
+    transform: translateX(0);
+    transition: transform .8s cubic-bezier(1, 0.005, 1, 0.04);
+  }
+}
+
+#name {
+  font-size: 11vmin;
+  letter-spacing: 1vmin;
+  padding-left: 1vmin;
+}
+
+#title {
+  font-size: 2.5vmin;
+  // `letter-spacing` produces extra space on the right.
+  // CSS-Tricks: add the same space via padding on the left.
+  letter-spacing: 5vmin;
+  padding-left: 5vmin;
+}
+
+#menu-container {
+  font-family: 'Droid Mono', monospace;
+  font-size: 6.5vmin;
+
+  .link {
+    transition: color .25s, top .75s cubic-bezier(.9,-.99,1,.96);
+    color: gray;
+    .relative;
+    .top;
+    .pointer;
+
+    &.drop {
+      top: 100vh;
+    }
+  }
+
+  &.clickable {
+    .link {
+      color: yellow;
+
+      &:hover {
+        color: lime;
+      }
+    }
+  }
+
+  .typer {
+    &:after {
+      transition: margin-top .65s ease-in, margin-left .85s ease-out, transform 2s linear;
+      transform: rotate(0);
+      margin-top: 0;
+    }
+
+    &.drop {
+      &:after {
+        animation: none;
+        margin-top: 40vh;
+        margin-left: 7vmin;
+        transform: rotate(90deg);
+      }
+    }
+  }
+}
+
+.wrapify {
+  display: inline-block;
+  position: relative;
+  top: 0;
+  left: 0;
+  transform: rotate(0deg);
+}

@@ -1,10 +1,10 @@
 #four-zero-four {
-  .mono;
-  flex-direction: column;
-  position: relative;
-  font-size: 1.3em;
-  overflow-y: scroll;
   padding: 50px 0 0;
+
+  @media (max-width: @mobile) {
+    padding: 0;
+    justify-content: flex-start;
+  }
 
   &:before {
     content: '404';
@@ -13,53 +13,125 @@
     position: absolute;
     top: 25px;
     text-shadow: 5px 8px;
+    .left;
+  }
+
+  &.abyss {
+    .content div {
+      text-align: center;
+      max-width: 700px;
+    }
+
+    @media (max-width: @tablet-max) {
+      .content {
+        font-size: 1.4em;
+        max-width: 90%;
+      }
+    }
+
+    @media (max-width: @mobile) {
+      @media (orientation: landscape) {
+        align-items: flex-start;
+
+        .content {
+          margin-left: 10px;
+
+          div {
+            text-align: left;
+          }
+        }
+
+        .home {
+          left: initial;
+          margin: 0 10px 10px 0;
+          transform: none;
+          .right;
+        }
+      }
+    }
+  }
+
+  &.kalam {
+    .content {
+      font-size: 1.7em;
+
+      div {
+        border-bottom: 1px solid rgba(255,255,255,.5);
+        padding: 20px 0;
+      }
+
+      div:last-of-type {
+        border-bottom: none;
+      }
+    }
+
+    @media (max-width: @tablet-max) {
+      h1 {
+        text-align: center;
+      }
+    }
+
+    @media (max-width: @mobile) {
+      .content {
+        max-width: 90%;
+        font-size: 1.2em;
+
+        div {
+          padding: 15px 0;
+          text-align: center;
+        }
+      }
+
+      @media (orientation: landscape) {
+        h1 {
+          margin-bottom: 0;
+        }
+      }
+    }
+  }
+
+  &.apparently {
+    text-align: center;
+
+    .url {
+      word-break: break-word;
+    }
+
+    @media (min-width: @tablet-min) {
+      .content {
+        font-size: 1.7em;
+      }
+    }
+
+    @media (max-width: @mobile) {
+      justify-content: center;
+    }
   }
 
   .home {
-    padding: 30px 30px 20px;
-    position: absolute;
-    top: 0;
+    text-decoration: none;
+    padding: 15px;
+    margin: 10px 0 0 10px;
+    border: 2px dashed;
     z-index: 1;
     font-size: 16px;
     background: linear-gradient(to top left, rgba(255,255,255,.3), rgba(255,255,255,.1), transparent);
-    cursor: pointer;
-    user-select: none;
+
+    @media (max-width: @mobile) {
+      top: initial;
+      left: 50%;
+      transform: translateX(-50%);
+      margin: 0 0 10px;
+      padding: 6px 10px;
+      .bottom;
+    }
 
     &.highlight {
       background: #f0f;
     }
   }
 
-  .abyss {
-    div {
-      text-align: center;
-    }
-  }
-
-  .kalam {
-    .sans;
-    font-size: 1.7em;
-
-    div {
-      border-bottom: 1px solid rgba(255,255,255,.5);
-      padding: 20px 0;
-    }
-
-    div:last-of-type {
-      border-bottom: none;
-    }
-  }
-
-  .apparently {
-    text-align: center;
-  }
-
-  @media screen and (max-width: @mobile) {
-    justify-content: flex-start;
-    font-size: 1em;
-
-    .apparently {
-      word-break: break-all;
-    }
+  .content {
+    max-width: 600px;
   }
 }

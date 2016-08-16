@@ -1,83 +1,111 @@
-App.Views.ContactView = Backbone.View.extend({
+app.ContactView = Backbone.View.extend({
   id: 'contact',
-  className: 'full-size page',
+  className: 'page overflow y',
   initialize: function() {
-    App.router.navigate('contact');
-    this.html = App.templates.ContactView();
-    this.render();
-  },
-  render: function() {
-    var _this = this;
-    var closer = $('<div class="close light">&times;</div>');
-
-    App.randomDir(this.$el);
-
-    this.$el.html(this.html);
-    this.$el.append(closer);
-    $('body').append(this.$el);
-
-    setTimeout(function() {
-      _this.$el.addClass('show');
-    }, 10);
+    router.navigate('contact');
+    this.name = 'ContactView';
+    this.$el.html(templates.contact());
+    this.$name = this.$el.find('.name');
+    this.$email = this.$el.find('.email');
+    this.$message = this.$el.find('.message');
+    this.$submit = this.$el.find('.submit');
+    app.typicalRender(this);
   },
   events: {
-    'click .close': 'hide',
-    'click #submit': 'submit',
-    'input .form-field': 'removeError',
-    'transitionend': 'close'
+    'click .submit': 'submit',
+    'keypress .input': 'checkErrorState',
+    'keypress .submit': 'enter'
   },
-  submit: function(e) {
-    e.preventDefault();
-    if(!this.checkForm()) return;
+  submit: function() {
+    var data = {
+      name: this.$name.val(),
+      email: this.$email.val(),
+      message: this.$message.val()
+    };
+    var check = this.checkData(data);
 
+    check === 'ok' ? this.submitForm(data) : this.showErrors(check);
+  },
+  checkData: function(data) {
+    // Check for proper email: http://goo.gl/O6ctPN.
+    var emailRegex = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,15})+$/;
+    var errors = [];
+
+    // Check for missing fields.
+    if (!data.name.length) errors.push('$name');
+    if (!data.email.length || !emailRegex.test(data.email)) errors.push('$email');
+    if (!data.message.length || data.message.length > 10000) errors.push('$message');
+
+    return errors.length ? errors : 'ok';
+  },
+  showErrors: function(errors) {
+    errors.map(function(error) {
+      this[error].addClass('error');
+    }.bind(this));
+
+    this.$submit.addClass('error');
+  },
+  checkErrorState: function(e) {
+    $(e.currentTarget).removeClass('error');
+    this.$submit.removeClass('error');
+  },
+  enter: function(e) {
+    if (e.which === 13) this.submit();
+  },
+  submitForm: function(data) {
     var _this = this;
-    var form = $('#contact-form');
 
-    $.post('/contact', form.serializeArray())
-      .success(function(data) {
-        console.log('success');
-        _this.success();
+    $.post('/contact', data)
+      .done(function() {
+        _this.response('Success!');
       })
       .fail(function(err) {
-        console.log(err);
+        // WEIRD: Unless this variable is declared with the contents
+        // of 'err', passing 'err' to the ajax call below doesn't work.
+        var error = {
+          type: 'contact form error',
+          status: err.status,
+          statusText: err.statusText,
+          responseText: err.responseText,
+          responseJSON: err.responseJSON
+        };
+
+        _this.response('Error - try again');
+
+        // Log the error to the database.
+        $.post('/error-logs', error);
       });
   },
-  checkForm: function() {
-    var $invalid = $('.form-field:invalid');
-    if($invalid.length) {
-      $invalid.addClass('error');
-      return false;
-    }
-
-    return true;
-  },
-  removeError: function(e) {
-    $(e.target).removeClass('error');
-  },
-  hide: function() {
-    this.$el.removeClass('show');
-    this.closing = true;
-  },
-  close: function(e) {
-    var close = App.dirCheck(e.originalEvent.propertyName);
-
-    if(this.closing && close) {
-      App.menuClickable = true;
-      App.kill(this, '', 1);
-    }
-  },
-  success: function() {
+  response: function(msg) {
     var _this = this;
+    var $response = $('<div class="response page flex centered">');
+    var $text = $('<div class="response-text">');
 
-    this.$el.addClass('flex-centered');
-    this.$el.html('<div class="success">Success!</div>');
+    $text.text(msg);
+    $response.append($text);
+
+    if (msg !== 'Success!') $text.addClass('error');
+
+    this.$el.append($response);
+
     setTimeout(function() {
-      $('.success').addClass('animate');
+      $response.addClass('show');
 
       setTimeout(function() {
-        App.menuClickable = true;
-        App.kill(_this, '');
-      }, 2500);
-    }, 0);
+        $text.addClass('animate');
+
+        setTimeout(function() {
+          $response.remove();
+
+          if (msg === 'Success!') _this.clearForm();
+        }, 2500);
+      }, 500);
+    }, 10);
+  },
+  clearForm: function() {
+    this.$name.val('');
+    this.$email.val('');
+    this.$message.val('');
+    this.el.scrollTop = 0;
   }
 });

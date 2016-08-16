@@ -1,42 +1,48 @@
 {
   "name": "aaroncordova.xyz",
-  "version": "1.0.0",
-  "description": "Personal website for Aaron Cordova",
+  "version": "2.0.0",
+  "description": "Aaron Cordova - Web Developer",
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js"
   },
   "engines": {
-    "node": "^5.4.1"
+    "node": "^6.2.1"
   },
   "author": "Qodesmith",
   "license": "ISC",
   "dependencies": {
-    "backbone": "^1.2.3",
-    "body-parser": "^1.15.0",
-    "compression": "^1.6.1",
-    "dotenv": "^2.0.0",
-    "express": "^4.13.4",
-    "handlebars": "^4.0.5",
-    "jquery": "^2.2.0",
-    "mailgun-js": "^0.7.7",
-    "thing-to-html": "^1.0.6",
-    "typer-js": "^2.0.7",
-    "underscore": "^1.8.3"
+    "assert": "^1.4.1",
+    "bcrypt": "^0.8.7",
+    "body-parser": "^1.15.2",
+    "compression": "^1.6.2",
+    "connect-mongodb-session": "^1.1.1",
+    "express": "^4.14.0",
+    "express-session": "^1.14.0",
+    "helmet": "^2.1.2",
+    "mailgun-js": "^0.7.11",
+    "mongodb": "^2.2.5",
+    "serve-favicon": "^2.3.0"
   },
   "devDependencies": {
-    "browserify": "^13.0.0",
-    "gulp": "^3.9.0",
+    "afplay": "^1.0.3",
+    "background-image-gallery": "^1.0.3",
+    "dotenv": "^2.0.0",
+    "gulp": "github:gulpjs/gulp#4.0",
     "gulp-autoprefixer": "^3.1.0",
+    "gulp-combine-mq": "^0.4.0",
     "gulp-concat-util": "^0.5.5",
-    "gulp-cssnano": "^2.1.0",
+    "gulp-cssnano": "^2.1.2",
     "gulp-declare": "^0.3.0",
+    "gulp-eslint": "^3.0.1",
     "gulp-handlebars": "^4.0.0",
-    "gulp-less": "^3.0.5",
-    "gulp-uglify": "^1.5.1",
-    "gulp-wrap": "^0.11.0",
-    "vinyl-buffer": "^1.0.0",
-    "vinyl-source-stream": "^1.1.0"
+    "gulp-less": "^3.1.0",
+    "gulp-uglify": "^1.5.4",
+    "gulp-wrap": "^0.13.0",
+    "handlebars": "^4.0.5",
+    "thing-to-html": "^1.0.7",
+    "time-calculator": "^1.0.8",
+    "typer-js": "^2.1.0"
   }
 }

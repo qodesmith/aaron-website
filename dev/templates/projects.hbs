@@ -1,0 +1,42 @@
+{{!--
+  JSON format:
+
+  {
+    name: '...',
+    description: '...',
+    background: '...',
+    github: '...',
+    demo: '...',
+    external: true // on external links only
+  }
+
+ --}}
+
+{{#each this}}
+  <div class="project" style="background-image:url('{{background}}')">
+
+    {{#if external}}
+    <h1 class="center">
+      <a href="{{demo}}" target="_blank" class="strip-link">{{name}}</a>
+    </h1>
+    {{else}}
+    <h1 data-view="{{demo}}" class="center pointer">{{name}}</h1>
+    {{/if}}
+
+    <div class="description center">{{description}}</div>
+    <div class="links flex centered">
+      <a href="{{github}}" target="_blank" class="github"></a>
+
+      {{#if external}}
+      <a href="{{demo}}" target="_blank" class="demo relative flex centered external strip-link">
+        DEMO<span class="triangle"></span>
+      </a>
+      {{else}}
+      <div data-view="{{demo}}" class="demo relative flex centered pointer">
+        DEMO<span class="triangle"></span>
+      </div>
+      {{/if}}
+
+    </div>
+  </div>
+{{/each}}

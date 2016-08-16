@@ -1,0 +1,152 @@
+#navigation {
+  // @hamburger-size & @hamburger-size-mobile found in `global.less`.
+  width: @hamburger-size;
+  height: @hamburger-size;
+  transition: height .5s ease, width .5s ease, opacity .5s;
+  background: @off-white;
+  color: @off-black;
+  opacity: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  z-index: 9001;
+  box-shadow: 0 0 20px black, 0 0 20px black;
+
+  &.attached {
+    opacity: 1;
+  }
+
+  &.open {
+    width: 100vw;
+    height: 100vh;
+
+    .hamburger {
+      border: 1px solid @off-black;
+      border-top-color: transparent;
+      border-right-color: transparent;
+    }
+
+    .line-top {
+      top: 9px;
+      transform: rotate(45deg);
+    }
+
+    .line-middle {
+      transform: rotate(-45deg);
+    }
+
+    .line-bottom {
+      top: -9px;
+      transform: rotate(-45deg);
+    }
+  }
+
+  .hamburger {
+    width: @hamburger-size;
+    height: @hamburger-size;
+    padding: 9px 6px;
+    border: 1px solid transparent;
+    margin-left: auto; // Keep this in the top-let corner.
+    background: @off-white;
+    transition: border .5s;
+    .pointer;
+  }
+
+  .line {
+    background: @off-black;
+    width: 100%;
+    height: 4px;
+    border-radius: 2px;
+    transition: transform .35s, top .35s;
+    transform: rotate(0);
+    .relative;
+    .top;
+  }
+
+  .nav-contents {
+    width: 100vw;
+    font-size: 15vmin;
+    padding-left: 12vmin;
+    height: calc(~'100vh' - @hamburger-size); // http://goo.gl/Ycj0Sl
+  }
+
+  .nav-item {
+    display: inline-table;
+    padding-bottom: 3.5vmin;
+    opacity: 1;
+    transition: opacity .3s linear;
+    .pointer;
+
+    &.not-focused {
+      opacity: .25;
+    }
+
+    .title {
+      font-weight: bold;
+      margin-bottom: -3vmin;
+    }
+
+    .description {
+      height: 1em;
+      font-size: 4vmin;
+      transition: opacity .5s;
+    }
+
+    .description-content {
+      font-size: 4vmin;
+    }
+  }
+
+  .description-content {
+    display: none;
+  }
+
+  @media (max-width: @tablet-max) {
+    .nav-contents {
+      font-size: 15vmin;
+      padding-left: 6vmin;
+    }
+
+    .description {
+      display: none;
+    }
+
+    .description-content {
+      display: block;
+    }
+  }
+
+  @media (max-width: @mobile) {
+    transition: height .25s ease, width .25s ease, opacity .5s;
+    top: initial;
+    .bottom;
+
+    .hamburger {
+      top: initial;
+      .bottom;
+      .absolute;
+      .right;
+      border: 1px solid @off-black!important;
+      border-right-color: transparent!important;
+      border-bottom-color: transparent!important;
+    }
+
+
+    .nav-contents {
+      padding: 0 6vmin 0 0;
+      text-align: right;
+      justify-content: center;
+      align-items: flex-end;
+
+      @media (orientation: landscape) {
+        font-size: 14vmin;
+        padding: 0;
+        text-align: center;
+        align-items: center;
+      }
+    }
+
+    .nav-item {
+      padding-bottom: 3vmin;
+    }
+
+  }
+}
