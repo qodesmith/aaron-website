@@ -66,7 +66,7 @@ Handlebars.registerHelper('date', function(dateNumber) {
 });
 
 Handlebars.registerHelper('tagList', function(tagsArray) {
-  var elements = tagsArray.map(function(tag) {
+  var tags = tagsArray.map(function(tag) {
     return [
       '<a href="#">',
       tag,
@@ -74,7 +74,7 @@ Handlebars.registerHelper('tagList', function(tagsArray) {
     ].join('');
   });
 
-  return elements.join(', ');
+  return tags.join(', ');
 });
 
 

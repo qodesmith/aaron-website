@@ -71,6 +71,10 @@ app.Router = Backbone.Router.extend({
 
       view.remove(original);
     }
+
+    if (views.previewPost) {
+      views.previewPost.remove();
+    }
   },
   navAndView: function(view, data) {
     // `data`:

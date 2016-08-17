@@ -60,7 +60,8 @@ app.AdminPostView = Backbone.View.extend({
     'click .delete': 'delete',
 
     // CREATE EVENTS
-    'click .submit': 'submit'
+    'click .submit': 'submit',
+    'click .preview': 'preview'
   },
 
   getFormData: function() {
@@ -346,5 +347,8 @@ app.AdminPostView = Backbone.View.extend({
         $('.input').val('');
       }
     });
+  },
+  preview: function() {
+    views.previewPost = new app.PreviewPostView();
   }
 });
