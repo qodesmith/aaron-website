@@ -155,7 +155,7 @@ app.BlogView = Backbone.View.extend({
     var id = $(e.currentTarget).data('id');
     var model = (this.tag ? taggedPosts : posts).where({_id: id})[0];
 
-    views.currentView.remove();
+    app.removeCurrentView();
     views.currentView = new app.BlogPostView({model: model});
   },
   buttonState: function(state) {

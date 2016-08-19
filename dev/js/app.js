@@ -56,6 +56,57 @@ app.randomizeArray = function(array) {
   return array;
 };
 
+// Remove's the current view with robust logic for various types.
+app.removeCurrentView = function(original) {
+  var view = views.currentView;
+
+  if (view) {
+
+    // Stop the mutation observer on the blog's 'load more' button.
+    if (view.blog) {
+      view.buttonObserver.disconnect();
+      delete view.buttonObserver;
+    }
+
+    // Reset the `taggedPosts` collection,
+    // forcing it to reload queried posts each time.
+    if (view.tagBlog) {
+      taggedPosts.reset();
+    }
+
+    // For any view with a typer on it.
+    if (view.typer) {
+      document.body.dispatchEvent(new Event('killTyper'));
+    }
+
+    // For the thingToHTML demo.
+    if (view.thing) {
+      document.body.dispatchEvent(new Event('killThingExample'));
+    }
+
+    if (view.calculator) {
+      document.body.dispatchEvent(new Event('killTimeCalc'));
+    }
+
+    // For the deckGrid demo.
+    if (view.deck) {
+      document.body.dispatchEvent(new Event('killDeckGrid'));
+    }
+
+    // For the bgGallery demo.
+    if (view.gallery) {
+      document.body.dispatchEvent(new Event('killGallery'));
+    }
+
+    view.remove(original);
+  }
+
+  if (views.previewPost) {
+    views.previewPost.remove();
+    views.previrePost = null;
+  }
+};
+
 
 ////////////////////////
 // HANDLEBARS HELPERS //

@@ -28,60 +28,12 @@ app.Router = Backbone.Router.extend({
     // 404 ROUTE
     '*404': 'fourZeroFour'
   },
-  removeCurrentView: function(original) {
-    var view = views.currentView;
-
-    if (view) {
-
-      // Stop the mutation observer on the blog's 'load more' button.
-      if (view.blog) {
-        view.buttonObserver.disconnect();
-        delete view.buttonObserver;
-      }
-
-      // Reset the `taggedPosts` collection,
-      // forcing it to reload queried posts each time.
-      if (view.tagBlog) {
-        taggedPosts.reset();
-      }
-
-      // For any view with a typer on it.
-      if (view.typer) {
-        document.body.dispatchEvent(new Event('killTyper'));
-      }
-
-      // For the thingToHTML demo.
-      if (view.thing) {
-        document.body.dispatchEvent(new Event('killThingExample'));
-      }
-
-      if (view.calculator) {
-        document.body.dispatchEvent(new Event('killTimeCalc'));
-      }
-
-      // For the deckGrid demo.
-      if (view.deck) {
-        document.body.dispatchEvent(new Event('killDeckGrid'));
-      }
-
-      // For the bgGallery demo.
-      if (view.gallery) {
-        document.body.dispatchEvent(new Event('killGallery'));
-      }
-
-      view.remove(original);
-    }
-
-    if (views.previewPost) {
-      views.previewPost.remove();
-    }
-  },
   navAndView: function(view, data) {
     // `data`:
     // {model: model}
     // {tag: tag}
 
-    this.removeCurrentView();
+    app.removeCurrentView();
 
     if (!views.NavigationView) {
       views.NavigationView = new app.NavigationView(view, data);
@@ -95,7 +47,7 @@ app.Router = Backbone.Router.extend({
 
   // MAIN ROUTES
   index: function() {
-    this.removeCurrentView();
+    app.removeCurrentView();
     views.currentView = null;
 
     if (!views.HomeView) {

@@ -21,7 +21,7 @@ app.BlogPostView = Backbone.View.extend({
     var tag = $(e.currentTarget).text();
     e.preventDefault();
 
-    views.currentView.remove();
+    app.removeCurrentView();
     views.currentView = new app.BlogView({tag: tag});
   }
 });

@@ -26,7 +26,6 @@ app.PreviewPostView = Backbone.View.extend({
     'click .close': 'close'
   },
   close: function() {
-    this.remove();
-    views.previewPost = null;
+    app.removeCurrentView();
   }
 });

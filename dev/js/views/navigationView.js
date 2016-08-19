@@ -78,7 +78,7 @@ app.NavigationView = Backbone.View.extend({
     } else if (view === views.currentView.name) {
       this.$el.removeClass('open');
     } else {
-      views.currentView.remove();
+      app.removeCurrentView();
       views.currentView = new app[view]();
       this.$el.removeClass('open');
     }
