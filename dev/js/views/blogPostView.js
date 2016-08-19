@@ -2,13 +2,14 @@ app.BlogPostView = Backbone.View.extend({
   id: 'blog-post',
   className: 'page overflow y',
   initialize: function() {
+    var id = this.model.get('_id');
     var image = [
       'url(',
       this.model.get('image'),
       ')'
     ].join('');
 
-    router.navigate('blog/' + this.model.get('_id'));
+    router.navigate('blog/' + id);
     this.$el.html(templates.blogPost(this.model.toJSON()));
     this.el.style.backgroundImage = image;
     app.typicalRender(this);

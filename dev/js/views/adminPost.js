@@ -54,14 +54,20 @@ app.AdminPostView = Backbone.View.extend({
     // EDIT EVENTS
     'click .post': 'getSinglePost',
     'keyup .search': 'searchFilter',
-    'click .ok': 'ok',
     'click .cancel': 'removeModal',
-    'click .save': 'save',
-    'click .delete': 'delete',
+    'click .save': 'modalSaveEdits',
+    'click .delete': 'modalDeletePost',
 
     // CREATE EVENTS
-    'click .submit': 'submit',
-    'click .preview': 'preview'
+    'click .submit': 'modalCreateNewPost',
+    'click .preview': 'preview',
+
+    // MODAL EVENTS
+    'click .ok.save-edits': 'saveEdits',
+    'click .ok.delete-post': 'deletePost',
+    'click .ok.overwrite': 'overwriteChanges',
+    'click .ok.create': 'createNewPost',
+    'click .ok': 'removeModal' // Always remove the modal after hitting 'ok'.
   },
 
   getFormData: function() {
@@ -92,6 +98,36 @@ app.AdminPostView = Backbone.View.extend({
       .sort(); // Alphabetical order.
 
     return sanitized;
+  },
+  newModal: function(type, content) {
+    var $modal = $('<div class="modal page flex centered col">');
+    var $content = $('<div class="modal-content">');
+    var $buttons = $('<div class="buttons flex">');
+    var $ok = $('<div class="button ok ' + type + '">OK</div>');
+    var $cancel = $('<div class="button cancel">CANCEL</div>');
+
+    $buttons
+      .append($ok)
+      .append($cancel);
+    $content.text(content);
+    $modal
+      .append($content)
+      .append($buttons);
+
+    this.$el.append($modal);
+
+    setTimeout(function() {
+      $modal.addClass('show');
+    }, 10);
+  },
+  removeModal: function() {
+    if (this.edit) this.resetError();
+
+    $('.modal').removeClass('show');
+
+    setTimeout(function() {
+      $('.modal').remove();
+    }, 1000);
   },
 
 
@@ -167,7 +203,7 @@ app.AdminPostView = Backbone.View.extend({
 
     if (oldModel && this.hasDataChanged(formData, oldModel)) {
       this.newModel = model;
-      return this.warning();
+      return this.modalOverwriteChanges();
     }
 
     this.currentPost = model;
@@ -221,34 +257,22 @@ app.AdminPostView = Backbone.View.extend({
     if (!data) return false;
 
     for (var i in data) {
-      if (data[i]) changes[i] = $('.' + i).val();
-      if (i === 'tags') changes[i] = this.sanitizeTags(changes[i]);
+      if (data[i]) {
+        if (i === 'tags') {
+          changes[i] = this.sanitizeTags(changes[i]);
+        } else {
+          changes[i] = $('.' + i).val();
+        }
+      }
     }
 
     return changes;
   },
-  warning: function(newModel) {
-    var $modal = $('<div class="modal page flex centered col">');
-    var $content = $('<div class="modal-content">');
-    var $buttons = $('<div class="buttons flex">');
-    var $ok = $('<div class="button ok">OK</div>');
-    var $cancel = $('<div class="button cancel">CANCEL</div>');
-
-    $buttons
-      .append($ok)
-      .append($cancel);
-    $content.text('Disregard changes & load the new post?');
-    $modal
-      .append($content)
-      .append($buttons);
-
-    this.$el.append($modal);
-
-    setTimeout(function() {
-      $modal.addClass('show');
-    }, 10);
+  // Edit modal methods...
+  modalOverwriteChanges: function(newModel) {
+    this.newModal('overwrite', 'Disregard changes & load the new post?');
   },
-  ok: function() {
+  overwriteChanges: function() {
     var model = this.newModel;
 
     this.currentPost = this.newModel;
@@ -258,22 +282,12 @@ app.AdminPostView = Backbone.View.extend({
     $('.image').val(model.get('image'));
     $('.tags').val(model.get('tags').join(', '));
     $('.content').val(model.get('content'));
-
-    this.removeModal();
   },
-  removeModal: function() {
-    $('.modal').removeClass('show');
-
-    setTimeout(function() {
-      $('.modal').remove();
-    }, 500);
-  },
-  save: function() {
+  modalSaveEdits: function() {
     if (!this.currentPost) {
       return this.error('no post loaded');
     }
 
-    var _this = this;
     var data = this.getChangedData(this.currentPost);
 
     if (!data) {
@@ -284,6 +298,12 @@ app.AdminPostView = Backbone.View.extend({
     if (data.title) {
       return this.error('title change detected');
     }
+
+    this.newModal('save-edits', 'Are you sure you want to save these edits?');
+  },
+  saveEdits: function() {
+    var _this = this;
+    var data = this.getChangedData(this.currentPost);
 
     data.updatedAt = Date.now();
     this.currentPost.save(data, {
@@ -303,12 +323,15 @@ app.AdminPostView = Backbone.View.extend({
       }
     });
   },
-  delete: function() {
+  modalDeletePost: function() {
     if (!this.currentPost) {
       this.error('no post to delete');
       return;
     }
 
+    this.newModal('delete-post', 'Are you sure you want to delete this post?');
+  },
+  deletePost: function() {
     var _this = this;
 
     this.currentPost.destroy({
@@ -334,7 +357,14 @@ app.AdminPostView = Backbone.View.extend({
   // CREATE METHODS //
   ////////////////////
 
-  submit: function() {
+  preview: function() {
+    views.previewPost = new app.PreviewPostView();
+  },
+  // Create modal methods...
+  modalCreateNewPost: function() {
+    this.newModal('create', 'Are you sure you want to create this post?');
+  },
+  createNewPost: function() {
     var _this = this;
     var data = JSON.stringify(this.getFormData());
 
@@ -347,8 +377,5 @@ app.AdminPostView = Backbone.View.extend({
         $('.input').val('');
       }
     });
-  },
-  preview: function() {
-    views.previewPost = new app.PreviewPostView();
   }
 });

@@ -16,9 +16,11 @@ var MongoStore  = require('connect-mongodb-session')(require('express-session'))
 var assert = require('assert');
 
 // General / other.
+var cachedIndex; // Will contain the `index.html` file.
 var path = require('path');
 var fs = require('fs');
 var bcrypt = require('bcrypt');
+var CronJob = require('cron').CronJob;
 var mailgun = require('mailgun-js')({
   apiKey: process.env.mailgun_api_key,
   domain: process.env.mailgun_domain
@@ -91,7 +93,6 @@ app.get('/blog-posts', function(req, res) {
       return db.close();
     }
 
-
     var q = req.query;
     var tag = q.tag;
     var id = q.id;
@@ -118,12 +119,14 @@ app.get('/blog-posts', function(req, res) {
 });
 
 app.get('*', function (req, res) {
+  if (cachedIndex) return res.send(cachedIndex);
+
   fs.readFile('./public/index.html', 'utf-8', function(err, file) {
     if (err) {
-      res.status(500).send('Oops! Try reloading your browser...');
-      return;
+      return res.status(500).send('Oops! Try reloading your browser...');
     }
 
+    cachedIndex = file;
     res.send(file);
   });
 });
@@ -341,6 +344,35 @@ app.delete('/blog-posts/:_id', adminCheck, function(req, res) {
 /*****************************************************/
 /*****************************************************/
 /*****************************************************/
+
+// Cron job: send a daily email with reports & statistics.
+// TODO: use google analytics instead?
+// `* * * * * *`
+// `sec min hour dayOfMonth month dayOfWeek`
+// 6am, every day.
+new CronJob('00 00 6 * * *', function() {
+  var data = {
+    from: process.env.cron_from,
+    to: process.env.email,
+    subject: process.env.cron_subject
+  };
+
+  MongoClient.connect(process.env.mongoURI, function(err, db) {
+    if (err) {
+      data.text = [
+        'An error occurred:\n',
+        JSON.stringify(err)
+      ].join('');
+
+      mailgun.messages().send(data);
+      return db.close();
+    }
+
+    // TODO: connect to mongodb, aggregate info, send it in an email.
+    data.text = 'This is a test of the cron-job email system.';
+    mailgun.messages().send(data);
+  });
+}, null, true, 'America/New_York');
 
 
 app.listen(process.env.PORT, function() {
