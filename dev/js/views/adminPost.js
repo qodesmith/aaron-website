@@ -259,7 +259,7 @@ app.AdminPostView = Backbone.View.extend({
     for (var i in data) {
       if (data[i]) {
         if (i === 'tags') {
-          changes[i] = this.sanitizeTags(changes[i]);
+          changes[i] = this.sanitizeTags($('.tags').val());
         } else {
           changes[i] = $('.' + i).val();
         }

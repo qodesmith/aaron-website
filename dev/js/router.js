@@ -133,15 +133,15 @@ app.Router = Backbone.Router.extend({
 
   // OTHER ROUTES
   editPost: function() {
-    this.removeCurrentView(true);
+    app.removeCurrentView(true);
     views.currentView = new app.AdminPostView('edit');
   },
   createPost: function() {
-    this.removeCurrentView(true);
+    app.removeCurrentView(true);
     views.currentView = new app.AdminPostView('create');
   },
   login: function() {
-    this.removeCurrentView(true);
+    app.removeCurrentView(true);
     views.currentView = new app.LoginView();
   },
 
@@ -153,7 +153,7 @@ app.Router = Backbone.Router.extend({
     views.HomeView = null;
     views.NavigationView = null;
 
-    this.removeCurrentView(true);
+    app.removeCurrentView(true);
     views.currentView = new app.FourZeroFourView();
   }
 });
