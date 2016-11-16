@@ -56,7 +56,16 @@ app.use(session({ // in case of 'deprecation error' - http://goo.gl/vgcFih
   store: store
 }));
 
-app.disable('x-powered-by');
+// app.disable('x-powered-by'); // Already handled by `helmet`.
+
+// https://goo.gl/fPQ9DN
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    // Whitelist domains for scripts & styles.
+    defaultSrc: ["'self'", 'www.google-analytics.com'],
+    styleSrc: ["'self'"]
+  }
+}));
 
 
 ///////////////////////
