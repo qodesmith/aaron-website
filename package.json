@@ -24,6 +24,7 @@
     "helmet": "^2.1.2",
     "mailgun-js": "^0.7.11",
     "mongodb": "^2.2.5",
+    "multer": "^1.2.0",
     "serve-favicon": "^2.3.0"
   },
   "devDependencies": {

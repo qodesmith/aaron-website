@@ -21,6 +21,8 @@ var path = require('path');
 var fs = require('fs');
 var bcrypt = require('bcrypt');
 var CronJob = require('cron').CronJob;
+var multer = require('multer');
+var multerDestination = require('./multerDestination');
 var mailgun = require('mailgun-js')({
   apiKey: process.env.mailgun_api_key,
   domain: process.env.mailgun_domain
@@ -230,6 +232,7 @@ app.post('/create-post', adminCheck, function(req, res) {
   }
 
   var body = req.body;
+  var dest = multer({dest: multerDestination()}); // e.g.: 'images/blog/08-2016'
   var sanitizedTitle;
 
   // Must have all fields, otherwise send error.
