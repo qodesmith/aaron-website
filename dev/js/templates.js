@@ -5,26 +5,26 @@ templates["blog"] = Handlebars.template({"1":function(container,depth0,helpers,p
     var helper;
 
   return "<div class=\"tag-title fixed top left\">\n  <div>TAG: <span class=\"bold\">\""
-    + container.escapeExpression(((helper = (helper = helpers.tag || (depth0 != null ? depth0.tag : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"tag","hash":{},"data":data}) : helper)))
+    + container.escapeExpression(((helper = (helper = helpers.tag || (depth0 != null ? depth0.tag : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"tag","hash":{},"data":data}) : helper)))
     + "\"</span></div>\n</div>\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 
   return "<div class=\"posts-container flex col\"></div>\n<div class=\"posts-button more\"></div>\n\n"
-    + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.tag : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
+    + ((stack1 = helpers["if"].call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.tag : depth0),{"name":"if","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
 },"useData":true});
 templates["blogPost"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
     return "        <span class=\"updated\">Updated:&nbsp;</span>"
-    + container.escapeExpression((helpers.date || (depth0 && depth0.date) || helpers.helperMissing).call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.updatedAt : depth0),{"name":"date","hash":{},"data":data}))
+    + container.escapeExpression((helpers.date || (depth0 && depth0.date) || helpers.helperMissing).call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.updatedAt : depth0),{"name":"date","hash":{},"data":data}))
     + "\n";
 },"3":function(container,depth0,helpers,partials,data) {
     return "        "
-    + container.escapeExpression((helpers.date || (depth0 && depth0.date) || helpers.helperMissing).call(depth0 != null ? depth0 : {},(depth0 != null ? depth0.createdAt : depth0),{"name":"date","hash":{},"data":data}))
+    + container.escapeExpression((helpers.date || (depth0 && depth0.date) || helpers.helperMissing).call(depth0 != null ? depth0 : (container.nullContext || {}),(depth0 != null ? depth0.createdAt : depth0),{"name":"date","hash":{},"data":data}))
     + "\n";
 },"5":function(container,depth0,helpers,partials,data) {
     return "";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
-    var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function";
+    var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function";
 
   return "<div class=\"post-container flex col\">\n  <header class=\"flex col\">\n    <h1 class=\"title\">"
     + container.escapeExpression(((helper = (helper = helpers.title || (depth0 != null ? depth0.title : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"title","hash":{},"data":data}) : helper)))
@@ -57,7 +57,7 @@ templates["navigation"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":
     return "<div class=\"hamburger flex centered col between\">\n  <span class=\"line line-top\"></span>\n  <span class=\"line line-middle\"></span>\n  <span class=\"line line-bottom\"></span>\n</div>\n\n<div class=\"nav-contents flex col overflow y\">\n  <div class=\"nav-item\" data-view=\"AboutView\">\n    <div class=\"title\">ABOUT ME</div>\n    <div class=\"description\"></div>\n    <div class=\"description-content\">Wordsmith &#10217; double-Tracksmith &#10217; Qodesmith...</div>\n  </div>\n  <div class=\"nav-item\" data-view=\"ProjectsView\">\n    <div class=\"title\">PROJECTS</div>\n    <div class=\"description\"></div>\n    <div class=\"description-content\">Things I've built that smell awesome...</div>\n  </div>\n  <div class=\"nav-item\" data-view=\"BlogView\">\n    <div class=\"title\">BLOG</div>\n    <div class=\"description\"></div>\n    <div class=\"description-content\">Nerd alert: JavaScript, audio, theology, & more...</div>\n  </div>\n  <div class=\"nav-item\" data-view=\"ContactView\">\n    <div class=\"title\">CONTACT</div>\n    <div class=\"description\"></div>\n    <div class=\"description-content\">Cordial communication...</div>\n  </div>\n</div>";
 },"useData":true});
 templates["projects"] = Handlebars.template({"1":function(container,depth0,helpers,partials,data) {
-    var stack1, helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+    var stack1, helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
   return "  <div class=\"project\" style=\"background-image:url('"
     + alias4(((helper = (helper = helpers.background || (depth0 != null ? depth0.background : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"background","hash":{},"data":data}) : helper)))
@@ -71,7 +71,7 @@ templates["projects"] = Handlebars.template({"1":function(container,depth0,helpe
     + ((stack1 = helpers["if"].call(alias1,(depth0 != null ? depth0.external : depth0),{"name":"if","hash":{},"fn":container.program(6, data, 0),"inverse":container.program(8, data, 0),"data":data})) != null ? stack1 : "")
     + "\n    </div>\n  </div>\n";
 },"2":function(container,depth0,helpers,partials,data) {
-    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+    var helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
   return "    <h1 class=\"center\">\n      <a href=\""
     + alias4(((helper = (helper = helpers.demo || (depth0 != null ? depth0.demo : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"demo","hash":{},"data":data}) : helper)))
@@ -79,7 +79,7 @@ templates["projects"] = Handlebars.template({"1":function(container,depth0,helpe
     + alias4(((helper = (helper = helpers.name || (depth0 != null ? depth0.name : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"name","hash":{},"data":data}) : helper)))
     + "</a>\n    </h1>\n";
 },"4":function(container,depth0,helpers,partials,data) {
-    var helper, alias1=depth0 != null ? depth0 : {}, alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
+    var helper, alias1=depth0 != null ? depth0 : (container.nullContext || {}), alias2=helpers.helperMissing, alias3="function", alias4=container.escapeExpression;
 
   return "    <h1 data-view=\""
     + alias4(((helper = (helper = helpers.demo || (depth0 != null ? depth0.demo : depth0)) != null ? helper : alias2),(typeof helper === alias3 ? helper.call(alias1,{"name":"demo","hash":{},"data":data}) : helper)))
@@ -90,19 +90,19 @@ templates["projects"] = Handlebars.template({"1":function(container,depth0,helpe
     var helper;
 
   return "      <a href=\""
-    + container.escapeExpression(((helper = (helper = helpers.demo || (depth0 != null ? depth0.demo : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"demo","hash":{},"data":data}) : helper)))
+    + container.escapeExpression(((helper = (helper = helpers.demo || (depth0 != null ? depth0.demo : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"demo","hash":{},"data":data}) : helper)))
     + "\" target=\"_blank\" class=\"demo relative flex centered external strip-link\">\n        DEMO<span class=\"triangle\"></span>\n      </a>\n";
 },"8":function(container,depth0,helpers,partials,data) {
     var helper;
 
   return "      <div data-view=\""
-    + container.escapeExpression(((helper = (helper = helpers.demo || (depth0 != null ? depth0.demo : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : {},{"name":"demo","hash":{},"data":data}) : helper)))
+    + container.escapeExpression(((helper = (helper = helpers.demo || (depth0 != null ? depth0.demo : depth0)) != null ? helper : helpers.helperMissing),(typeof helper === "function" ? helper.call(depth0 != null ? depth0 : (container.nullContext || {}),{"name":"demo","hash":{},"data":data}) : helper)))
     + "\" class=\"demo relative flex centered pointer\">\n        DEMO<span class=\"triangle\"></span>\n      </div>\n";
 },"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     var stack1;
 
   return "\n"
-    + ((stack1 = helpers.each.call(depth0 != null ? depth0 : {},depth0,{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
+    + ((stack1 = helpers.each.call(depth0 != null ? depth0 : (container.nullContext || {}),depth0,{"name":"each","hash":{},"fn":container.program(1, data, 0),"inverse":container.noop,"data":data})) != null ? stack1 : "");
 },"useData":true});
 templates["deckGridDemo"] = Handlebars.template({"compiler":[7,">= 4.0.0"],"main":function(container,depth0,helpers,partials,data) {
     return "<div class=\"container\">\n  <div class=\"grid\"></div>\n</div>\n\n<!-- LEGEND -->\n<div class=\"legend\">\n  <div class=\"instructions\">INSTRUCTIONS</div>\n  <div class=\"legend-item\" id=\"pole\">4x4</div>\n  <div class=\"legend-item\" id=\"delete\">Delete O or L</div>\n  <div class=\"legend-item\" id=\"create-length\">Create Length</div>\n  <div class=\"legend-item\" id=\"create-object\">Create Object</div>\n  <div class=\"legend-item\" id=\"beam-top\">Beam Top</div>\n  <div class=\"legend-item\" id=\"beam-bottom\">Beam Bottom</div>\n  <div class=\"legend-item\" id=\"double-top\">Double Top</div>\n  <div class=\"legend-item\" id=\"double-beam\">Double Beam</div>\n  <div class=\"legend-item\" id=\"double-bottom\">Double Bottom</div>\n  <div class=\"legend-item\" id=\"reset\">Reset</div>\n  <div class=\"legend-item\" id=\"save-layout\">Save Layout</div>\n  <div class=\"legend-item\" id=\"load-layout\">Load Layout</div>\n</div>\n\n<!-- SAVE -->\n<div class=\"modal\" id=\"save-modal\">\n  <div class=\"modal-content\">\n    <div class=\"modal-close\">&times;</div>\n    <h2>Save layout to a text file</h2>\n    <textarea name=\"\" id=\"view-JSON\" cols=\"60\" rows=\"8\"></textarea>\n    <button id=\"save-button\">SAVE</button>\n    <a download=\"deck.txt\" id=\"download-link\">Download</a>\n  </div>\n</div>\n\n<!-- LOAD -->\n<div class=\"modal\" id=\"load-modal\">\n  <div class=\"modal-content\">\n    <div class=\"modal-close\">&times;</div>\n    <textarea name=\"\" id=\"paste-JSON\" cols=\"70\" rows=\"12\"></textarea>\n    <button id=\"import-button\">IMPORT FILE</button>\n    <input type=\"file\" id=\"import\"></input>\n    <button id=\"load\">LOAD</button>\n    <div id=\"load-error\"></div>\n  </div>\n</div>\n\n<!-- CREATE LENGTH -->\n<div class=\"modal\" id=\"create-length-modal\">\n  <div class=\"modal-content\">\n    <div class=\"modal-close\">&times;</div>\n    <h2>Length in feet:</h2>\n    <input type=\"number\" id=\"length-feet\">\n    <h2>Length in inches:</h2>\n    <input type=\"number\" id=\"length-inches\">\n    <h2>Vertical or horizontal?</h2>\n    <div class=\"radios\">\n      <input type=\"radio\" name=\"direction\" value=\"horizontal\">Horizontal\n      <input type=\"radio\" name=\"direction\" value=\"vertical\">Vertical<br>\n    </div>\n    <button id=\"create-len\">Create</button>\n    <div id=\"error\"></div>\n  </div>\n</div>\n\n<!-- CREATE OBJECT -->\n<div class=\"modal\" id=\"create-obj-modal\">\n  <div class=\"modal-content\">\n    <div class=\"modal-close\">&times;</div>\n    <h2>Length feet: <input type=\"number\" id=\"obj-length-feet\"></h2>\n    <h2>Length inches: <input type=\"number\" id=\"obj-length-inches\"></h2>\n    <h2>Width feet: <input type=\"number\" id=\"obj-width-feet\"></h2>\n    <h2>Width inches: <input type=\"number\" id=\"obj-width-inches\"></h2>\n    <button id=\"create-obj\">Create</button>\n  </div>\n</div>";
