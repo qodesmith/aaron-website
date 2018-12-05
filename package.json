@@ -27,7 +27,7 @@
     "mongodb": "^2.2.5",
     "serve-favicon": "^2.3.0"
   },
-  "devDependencies": {
+  "devDependenciez": {
     "afplay": "^1.0.3",
     "background-image-gallery": "^1.0.3",
     "dotenv": "^2.0.0",
